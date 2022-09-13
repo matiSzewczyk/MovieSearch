@@ -3,9 +3,11 @@
     <item>
         <shape>
             <solid
-                android:color="?attr/colorSecondary" />
+                android:color="?attr/colorPrimary" />
             <corners
-                android:radius="30dp"/>
+                android:bottomLeftRadius="16dp"
+                android:bottomRightRadius="16dp" />
+
         </shape>
     </item>
 
