@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -39,10 +40,15 @@ class SearchFragment : Fragment() {
                 viewModel.uiState.collectLatest {
                     when (it.status) {
                         is SearchViewModel.UiState.UiStatus.Success -> {
+                            binding.progressBar.isVisible = false
                             Log.d("SearchFragment", "Success: ${it.accessToken}")
                         }
                         is SearchViewModel.UiState.UiStatus.IsLoading -> {
-                            // TODO: Display progressBar
+                            Log.d(
+                                "SearchFragment",
+                                "onViewCreated: Progress bar visible"
+                            )
+                            binding.progressBar.isVisible = true
                         }
                         is SearchViewModel.UiState.UiStatus.Error -> {
                             Log.e(
