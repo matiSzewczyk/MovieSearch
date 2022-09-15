@@ -12,6 +12,8 @@ class SearchViewModel @Inject constructor(
     private val repository: SearchRepository
 ) : ViewModel() {
 
+    
+
     init {
         viewModelScope.launch {
             repository.getAccessToken()
