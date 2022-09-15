@@ -9,6 +9,6 @@ import retrofit2.http.Headers
 interface SearchApi {
 
     @Headers("Authorization: Basic ${BuildConfig.BASE64}")
-    @GET("auth/oauth/token")
+    @GET("auth/oauth/token?grant_type=client_credentials")
     suspend fun getAccessToken(): Response<TokenResponse>
 }
