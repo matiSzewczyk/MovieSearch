@@ -1,14 +1,18 @@
 package com.matis.allegroapi.data.sources
 
-import com.matis.allegroapi.BuildConfig
-import com.matis.allegroapi.data.models.accessToken.TokenResponse
+import com.matis.allegroapi.data.models.offerResponse.OfferResponse
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Headers
+import retrofit2.http.Header
+import retrofit2.http.Query
 
 interface SearchApi {
 
-    @Headers("Authorization: Basic ${BuildConfig.BASE64}")
-    @GET("auth/oauth/token?grant_type=client_credentials")
-    suspend fun getAccessToken(): Response<TokenResponse>
+    // This endpoint requires the app to be verified by Allegro.
+    // Maybe take another look at this later down the road.
+    @GET("offers/listing")
+    suspend fun getOffers(
+        @Header("Authorization") accessToken: String,
+        @Query("seller.login") sellerLogin: String
+    ): Response<OfferResponse>
 }

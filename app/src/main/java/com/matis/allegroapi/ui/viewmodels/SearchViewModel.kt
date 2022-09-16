@@ -1,5 +1,6 @@
 package com.matis.allegroapi.ui.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.matis.allegroapi.data.models.offerResponse.OfferResponse
@@ -59,6 +60,24 @@ class SearchViewModel @Inject constructor(
                 it.copy(
                     status = UiState.UiStatus.Error(response.errorBody()!!.string())
                 )
+            }
+        }
+    }
+
+    fun getOffers(
+        sellerLogin: String
+    ) {
+        viewModelScope.launch {
+            val response = repository.getOffers(
+                uiState.value.accessToken.toString(),
+                sellerLogin
+            )
+            if (response.isSuccessful) {
+                Log.d("SearchViewModel", "getOffers: ${
+                    response.body()!!.offers[0].name
+                }")
+            } else {
+                Log.e("SearchViewModel", "getOffers: ${response.errorBody()!!.string()}", )
             }
         }
     }

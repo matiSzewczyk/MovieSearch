@@ -66,6 +66,9 @@ class SearchFragment : Fragment() {
         }
         binding.searchBar.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
+                viewModel.getOffers(
+                    binding.searchBar.text.toString()
+                )
                 hideSoftKeyboard()
                 return@setOnEditorActionListener true
             }
