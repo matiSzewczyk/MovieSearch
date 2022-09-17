@@ -9,14 +9,7 @@ import javax.inject.Inject
 
 class SearchRepositoryImpl @Inject constructor(
      private val searchApi: SearchApi,
-     private val tokenApi: TokenApi
  ) : SearchRepository {
-
-     override suspend fun getAccessToken(): Response<TokenResponse> {
-         return withContext(Dispatchers.IO) {
-             tokenApi.getAccessToken()
-         }
-     }
 
      override suspend fun getOffers(
          accessToken: String,

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AllegroApi</string>
-    <string name="search">Search...</string>
+    <string name="app_name">MovieApp</string>
+    <string name="search">Search…</string>
     <string name="search_title">Search</string>
 </resources>
