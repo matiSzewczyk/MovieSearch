@@ -20,17 +20,16 @@ class SearchModule {
     @Provides
     @Singleton
     fun provideSearchRepository(
-        searchApi: SearchApi,
-        tokenApi: TokenApi
+        searchApi: SearchApi
     ) : SearchRepository {
-        return SearchRepositoryImpl(searchApi, tokenApi)
+        return SearchRepositoryImpl(searchApi)
     }
 
     @Provides
     @Singleton
     fun provideAllegroSearchApi(): SearchApi {
         return Retrofit.Builder()
-            .baseUrl("https://api.allegro.pl/")
+            .baseUrl("https://api.themoviedb.org/4/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create()
