@@ -42,27 +42,6 @@ class SearchViewModel @Inject constructor(
                     status = UiState.UiStatus.IsLoading
                 )
             }
-            getAccessToken()
-            repository.getAccessToken()
-        }
-    }
-
-    private suspend fun getAccessToken() {
-        val response = repository.getAccessToken()
-        if (response.isSuccessful) {
-            val token = response.body()!!.access_token
-            _uiState.update {
-                it.copy(
-                    accessToken = token,
-                    status = UiState.UiStatus.Success
-                )
-            }
-        } else {
-            _uiState.update {
-                it.copy(
-                    status = UiState.UiStatus.Error(response.errorBody()!!.string())
-                )
-            }
         }
     }
 

@@ -16,7 +16,5 @@ interface SearchApi {
     @Headers("Authorization: Bearer ${BuildConfig.API_KEY}")
     @GET("offers/listing")
     suspend fun getOffers(
-        @Header("Authorization") accessToken: String,
-        @Query("seller.login") sellerLogin: String
     ): Response<OfferResponse>
 }
