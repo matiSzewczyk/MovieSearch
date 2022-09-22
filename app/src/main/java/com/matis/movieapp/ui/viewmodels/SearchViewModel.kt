@@ -24,7 +24,7 @@ class SearchViewModel @Inject constructor(
     val uiState: StateFlow<UiState> get() = _uiState.asStateFlow()
 
     data class UiState(
-        var responseList: MutableList<OfferResponse> = mutableListOf(),
+        var recentTrendingMovies: MutableList<Result> = mutableListOf(),
         var status: UiStatus? = null,
         var accessToken: String? = null
     ) {
@@ -50,8 +50,6 @@ class SearchViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             val response = repository.getOffers(
-                uiState.value.accessToken.toString(),
-                sellerLogin
             )
             if (response.isSuccessful) {
                 Log.d(
