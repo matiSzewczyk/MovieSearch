@@ -1,12 +1,10 @@
 package com.matis.movieapp.ui.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -62,6 +60,33 @@ class SearchFragment : Fragment() {
                     }
                 }
             }
+        }
+
+        binding.apply {
+            searchButton.setOnClickListener {
+                showSearchInput()
+            }
+
+            searchInput.setOnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus) {
+                    hideSearchInput()
+                }
+            }
+        }
+    }
+
+    private fun showSearchInput() {
+        binding.apply {
+            searchInput.isVisible = true
+            searchButton.isVisible = false
+            searchInput.requestFocus()
+        }
+    }
+
+    private fun hideSearchInput() {
+        binding.apply {
+            searchInput.isVisible = false
+            searchButton.isVisible = true
         }
     }
 
