@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -64,21 +63,6 @@ class SearchFragment : Fragment() {
                 }
             }
         }
-        binding.searchBar.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                viewModel.getOffers(
-                    binding.searchBar.text.toString()
-                )
-                hideSoftKeyboard()
-                return@setOnEditorActionListener true
-            }
-            false
-        }
-    }
-
-    private fun hideSoftKeyboard() {
-        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-        imm?.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
     override fun onDestroyView() {

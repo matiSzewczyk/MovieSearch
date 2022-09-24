@@ -3,7 +3,6 @@ package com.matis.movieapp.di
 import com.matis.movieapp.data.sources.SearchApi
 import com.matis.movieapp.data.sources.SearchRepository
 import com.matis.movieapp.data.sources.SearchRepositoryImpl
-import com.matis.movieapp.data.sources.TokenApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
