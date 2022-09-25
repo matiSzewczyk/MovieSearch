@@ -2,6 +2,7 @@ package com.matis.movieapp.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.transition.Fade
+import androidx.transition.Slide
+import androidx.transition.TransitionManager
 import com.matis.movieapp.databinding.FragmentSearchBinding
 import com.matis.movieapp.ui.viewmodels.SearchViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -77,16 +81,32 @@ class SearchFragment : Fragment() {
 
     private fun showSearchInput() {
         binding.apply {
+            val transition = Slide(Gravity.END)
+            transition.addTarget(searchInput)
+            transition.addTarget(searchButton)
+            transition.addTarget(fragmentTitle)
+            transition.duration = 100
+
+            TransitionManager.beginDelayedTransition(test, transition)
             searchInput.isVisible = true
             searchButton.isVisible = false
+            fragmentTitle.isVisible = false
             searchInput.requestFocus()
         }
     }
 
     private fun hideSearchInput() {
         binding.apply {
+            val transition = Slide(Gravity.END)
+            transition.addTarget(searchInput)
+            transition.addTarget(searchButton)
+            transition.addTarget(fragmentTitle)
+            transition.duration = 100
+
+            TransitionManager.beginDelayedTransition(test, transition)
             searchInput.isVisible = false
             searchButton.isVisible = true
+            fragmentTitle.isVisible = true
         }
     }
 

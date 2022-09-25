@@ -33,13 +33,4 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    init {
-        viewModelScope.launch {
-            _uiState.update {
-                it.copy(
-                    status = UiState.UiStatus.IsLoading
-                )
-            }
-        }
-    }
 }
