@@ -12,7 +12,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.transition.Fade
 import androidx.transition.Slide
 import androidx.transition.TransitionManager
 import com.matis.movieapp.databinding.FragmentSearchBinding
@@ -26,6 +25,14 @@ class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var transition: Slide
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        transition = Slide(Gravity.END)
+        transition.duration = 100
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,35 +86,23 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun showSearchInput() {
-        binding.apply {
-            val transition = Slide(Gravity.END)
-            transition.addTarget(searchInput)
-            transition.addTarget(searchButton)
-            transition.addTarget(fragmentTitle)
-            transition.duration = 100
+    private fun showSearchInput() = binding.apply {
+        transition.addTarget(searchInput)
+        TransitionManager.beginDelayedTransition(test, transition)
 
-            TransitionManager.beginDelayedTransition(test, transition)
-            searchInput.isVisible = true
-            searchButton.isVisible = false
-            fragmentTitle.isVisible = false
-            searchInput.requestFocus()
-        }
+        searchInput.isVisible = true
+        searchButton.isVisible = false
+        fragmentTitle.isVisible = false
+        searchInput.requestFocus()
     }
 
-    private fun hideSearchInput() {
-        binding.apply {
-            val transition = Slide(Gravity.END)
-            transition.addTarget(searchInput)
-            transition.addTarget(searchButton)
-            transition.addTarget(fragmentTitle)
-            transition.duration = 100
+    private fun hideSearchInput() = binding.apply {
+        transition.addTarget(searchInput)
+        TransitionManager.beginDelayedTransition(test, transition)
 
-            TransitionManager.beginDelayedTransition(test, transition)
-            searchInput.isVisible = false
-            searchButton.isVisible = true
-            fragmentTitle.isVisible = true
-        }
+        searchInput.isVisible = false
+        searchButton.isVisible = true
+        fragmentTitle.isVisible = true
     }
 
     override fun onDestroyView() {
