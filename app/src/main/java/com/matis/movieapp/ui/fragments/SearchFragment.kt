@@ -1,11 +1,14 @@
 package com.matis.movieapp.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -83,6 +86,15 @@ class SearchFragment : Fragment() {
                     hideSearchInput()
                 }
             }
+            searchInput.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    hideSoftInput()
+                    clearSearchInput()
+                    hideSearchInput()
+                    return@setOnEditorActionListener true
+                }
+                false
+            }
         }
     }
 
@@ -94,6 +106,21 @@ class SearchFragment : Fragment() {
         searchButton.isVisible = false
         fragmentTitle.isVisible = false
         searchInput.requestFocus()
+        showSoftInput()
+    }
+
+    private fun clearSearchInput() = binding.apply {
+        searchInput.text.clear()
+    }
+
+    private fun showSoftInput() {
+        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        imm?.showSoftInput(binding.searchInput, 0)
+    }
+
+    private fun hideSoftInput() {
+        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        imm?.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
     private fun hideSearchInput() = binding.apply {

@@ -51,6 +51,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/search_input_background"
+            android:inputType="text"
+            android:imeOptions="actionDone"
             android:clickable="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
