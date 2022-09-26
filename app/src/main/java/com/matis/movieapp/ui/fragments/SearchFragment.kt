@@ -84,6 +84,7 @@ class SearchFragment : Fragment() {
             searchInput.setOnFocusChangeListener { _, hasFocus ->
                 if (!hasFocus) {
                     hideSearchInput()
+                    hideSoftInput()
                 }
             }
             searchInput.setOnEditorActionListener { _, actionId, _ ->
