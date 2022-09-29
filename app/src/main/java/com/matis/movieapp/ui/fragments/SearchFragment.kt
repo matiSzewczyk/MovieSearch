@@ -85,6 +85,8 @@ class SearchFragment : Fragment() {
                 if (!hasFocus) {
                     hideSearchInput()
                     hideSoftInput()
+                } else {
+                    showSoftInput()
                 }
             }
             searchInput.setOnEditorActionListener { _, actionId, _ ->
@@ -107,7 +109,6 @@ class SearchFragment : Fragment() {
         searchButton.isVisible = false
         fragmentTitle.isVisible = false
         searchInput.requestFocus()
-        showSoftInput()
     }
 
     private fun clearSearchInput() = binding.apply {
