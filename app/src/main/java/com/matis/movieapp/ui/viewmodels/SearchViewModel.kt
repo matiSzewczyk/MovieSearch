@@ -40,11 +40,19 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun getRecentTrending() = viewModelScope.launch {
+        _uiState.update {
+            it.copy(
+                status = UiState.UiStatus.IsLoading
+            )
+        }
         val response = repository.getRecentTrendingMovies()
         if (response.isSuccessful) {
+            response.body()!!.results.map {
+                _uiState.value.recentTrendingMovies.add(it)
+            }
             _uiState.update {
                 it.copy(
-                    recentTrendingMovies = response.body()!!.results.toMutableList()
+                    status = UiState.UiStatus.Success
                 )
             }
         } else {

@@ -61,6 +61,7 @@ class SearchFragment : Fragment() {
                     when (it.status) {
                         is SearchViewModel.UiState.UiStatus.Success -> {
                             binding.progressBar.isVisible = false
+                            moviesAdapter.notifyDataSetChanged()
                             Log.d("SearchFragment", "Success: ${it.accessToken}")
                         }
                         is SearchViewModel.UiState.UiStatus.IsLoading -> {
