@@ -1,14 +1,19 @@
 package com.matis.movieapp.ui.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.matis.movieapp.data.models.discoverMovies.Result
 import com.matis.movieapp.data.sources.SearchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val TAG = "SearchViewModel"
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
@@ -27,6 +32,23 @@ class SearchViewModel @Inject constructor(
             object IsLoading : UiStatus()
             object Success : UiStatus()
             data class Error(val errorMessage: String) : UiStatus()
+        }
+    }
+
+    init {
+        getRecentTrending()
+    }
+
+    private fun getRecentTrending() = viewModelScope.launch {
+        val response = repository.getRecentTrendingMovies()
+        if (response.isSuccessful) {
+            _uiState.update {
+                it.copy(
+                    recentTrendingMovies = response.body()!!.results.toMutableList()
+                )
+            }
+        } else {
+            Log.e(TAG, "getRecentTrending: ${response.errorBody()!!.charStream().readText()}")
         }
     }
 

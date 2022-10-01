@@ -15,9 +15,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.Slide
 import androidx.transition.TransitionManager
 import com.matis.movieapp.databinding.FragmentSearchBinding
+import com.matis.movieapp.ui.adapters.MovieAdapter
 import com.matis.movieapp.ui.viewmodels.SearchViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -28,6 +30,8 @@ class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var moviesAdapter: MovieAdapter
 
     private lateinit var transition: Slide
 
@@ -48,6 +52,8 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setupRecyclerView()
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -99,6 +105,12 @@ class SearchFragment : Fragment() {
                 false
             }
         }
+    }
+
+    private fun setupRecyclerView() = binding.trendingMoviesRecyclerView.apply {
+        moviesAdapter = MovieAdapter(viewModel.uiState.value.recentTrendingMovies)
+        adapter = moviesAdapter
+        layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun showSearchInput() = binding.apply {
