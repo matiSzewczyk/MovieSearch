@@ -7,5 +7,20 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.matis.movieapp.ui.fragments.SearchFragment"
-        android:label="SearchFragment" />
+        android:label="SearchFragment">
+        <action
+            android:id="@+id/action_searchFragment_to_movieFragment"
+            app:popUpTo="@id/searchFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/movieFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieFragment"
+        android:name="com.matis.movieapp.ui.fragments.MovieFragment"
+        android:label="MovieFragment" >
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>
