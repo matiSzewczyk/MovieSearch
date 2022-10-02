@@ -23,6 +23,8 @@ class MovieFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.wtf.text = arguments?.get("id").toString()
     }
 
     override fun onDestroyView() {

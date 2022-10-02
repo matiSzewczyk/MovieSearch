@@ -15,18 +15,20 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.Slide
 import androidx.transition.TransitionManager
 import com.matis.movieapp.databinding.FragmentSearchBinding
 import com.matis.movieapp.ui.adapters.MovieAdapter
 import com.matis.movieapp.ui.viewmodels.SearchViewModel
+import com.matis.movieapp.utils.CustomClickInterface
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 private const val TAG = "SearchFragment"
 
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(), CustomClickInterface {
 
     private val viewModel: SearchViewModel by activityViewModels()
 
@@ -111,7 +113,10 @@ class SearchFragment : Fragment() {
     }
 
     private fun setupRecyclerView() = binding.trendingMoviesRecyclerView.apply {
-        moviesAdapter = MovieAdapter(viewModel.uiState.value.recentTrendingMovies)
+        moviesAdapter = MovieAdapter(
+            viewModel.uiState.value.recentTrendingMovies,
+            this@SearchFragment
+        )
         adapter = moviesAdapter
         layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
@@ -152,5 +157,10 @@ class SearchFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onClickListener(id: Int) {
+        val action = SearchFragmentDirections.actionSearchFragmentToMovieFragment(id)
+        findNavController().navigate(action)
     }
 }

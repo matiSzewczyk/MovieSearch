@@ -6,14 +6,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.matis.movieapp.data.models.discoverMovies.Result
 import com.matis.movieapp.databinding.MovieRvItemBinding
+import com.matis.movieapp.utils.CustomClickInterface
 
 class MovieAdapter(
-    private val movies: List<Result>
+    private val movies: List<Result>,
+    private val customClickInterface: CustomClickInterface
 ) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     inner class MovieViewHolder(
         val binding: MovieRvItemBinding
-    ) : RecyclerView.ViewHolder(binding.root)
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            apply {
+                itemView.setOnClickListener {
+                    customClickInterface.onClickListener(movies[adapterPosition].id)
+                }
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder(
