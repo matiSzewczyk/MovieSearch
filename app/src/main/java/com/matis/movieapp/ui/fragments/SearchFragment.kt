@@ -23,6 +23,7 @@ import com.matis.movieapp.ui.adapters.MovieAdapter
 import com.matis.movieapp.ui.viewmodels.SearchViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+
 private const val TAG = "SearchFragment"
 
 class SearchFragment : Fragment() {
@@ -63,18 +64,18 @@ class SearchFragment : Fragment() {
                         is SearchViewModel.UiState.UiStatus.Success -> {
                             binding.progressBar.isVisible = false
                             moviesAdapter.notifyDataSetChanged()
-                            Log.d("TAG", "Success: ${it.accessToken}")
+                            Log.d(TAG, "Success: ${it.accessToken}")
                         }
                         is SearchViewModel.UiState.UiStatus.IsLoading -> {
                             Log.d(
-                                "TAG",
+                                TAG,
                                 "onViewCreated: Progress bar visible"
                             )
                             binding.progressBar.isVisible = true
                         }
                         is SearchViewModel.UiState.UiStatus.Error -> {
                             Log.e(
-                                "TAG",
+                                TAG,
                                 "Error: ${(it.status as SearchViewModel.UiState.UiStatus.Error).errorMessage}"
                             )
                         }
@@ -105,6 +106,9 @@ class SearchFragment : Fragment() {
                     return@setOnEditorActionListener true
                 }
                 false
+            }
+            seeAllButton.setOnClickListener {
+
             }
         }
     }
