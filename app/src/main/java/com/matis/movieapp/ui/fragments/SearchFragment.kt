@@ -107,9 +107,6 @@ class SearchFragment : Fragment() {
                 }
                 false
             }
-            seeAllButton.setOnClickListener {
-
-            }
         }
     }
 
@@ -121,7 +118,7 @@ class SearchFragment : Fragment() {
 
     private fun showSearchInput() = binding.apply {
         transition.addTarget(searchInput)
-        TransitionManager.beginDelayedTransition(test, transition)
+        TransitionManager.beginDelayedTransition(searchLayout, transition)
 
         searchInput.isVisible = true
         searchButton.isVisible = false
@@ -145,7 +142,7 @@ class SearchFragment : Fragment() {
 
     private fun hideSearchInput() = binding.apply {
         transition.addTarget(searchInput)
-        TransitionManager.beginDelayedTransition(test, transition)
+        TransitionManager.beginDelayedTransition(searchLayout, transition)
 
         searchInput.isVisible = false
         searchButton.isVisible = true

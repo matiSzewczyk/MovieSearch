@@ -31,8 +31,6 @@ class MovieAdapter(
                 .load("https://image.tmdb.org/t/p/w500" + movies[position].poster_path)
                 .override(375, 375)
                 .into(moviePoster)
-
-            movieTitle.text = movies[position].title
         }
     }
 
