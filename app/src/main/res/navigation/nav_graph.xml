@@ -10,7 +10,7 @@
         android:label="SearchFragment">
         <action
             android:id="@+id/action_searchFragment_to_movieFragment"
-            app:popUpTo="@id/searchFragment"
+            app:popUpTo="@id/movieFragment"
             app:popUpToInclusive="true"
             app:destination="@id/movieFragment" />
     </fragment>
