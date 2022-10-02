@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.log
 
 private const val TAG = "SearchViewModel"
 
@@ -37,6 +38,7 @@ class SearchViewModel @Inject constructor(
 
     init {
         getRecentTrending()
+        getRecentTrendingTvShows()
     }
 
     private fun getRecentTrending() = viewModelScope.launch {
@@ -55,6 +57,15 @@ class SearchViewModel @Inject constructor(
                     status = UiState.UiStatus.Success
                 )
             }
+        } else {
+            Log.e(TAG, "getRecentTrending: ${response.errorBody()!!.charStream().readText()}")
+        }
+    }
+
+    private fun getRecentTrendingTvShows() = viewModelScope.launch {
+        val response = repository.getRecentTrendingTvShows()
+        if (response.isSuccessful) {
+            Log.d(TAG, "getRecentTrending: ${response.body()!!.results[0]}")
         } else {
             Log.e(TAG, "getRecentTrending: ${response.errorBody()!!.charStream().readText()}")
         }
