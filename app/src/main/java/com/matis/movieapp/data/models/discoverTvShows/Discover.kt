@@ -1,6 +1,6 @@
-package com.matis.movieapp.data.models.discoverMovies
+package com.matis.movieapp.data.models.discoverTvShows
 
-data class DiscoverMovies(
+data class Discover(
     val page: Int,
     val results: List<Result>,
     val total_pages: Int,

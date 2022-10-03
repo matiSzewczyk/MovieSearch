@@ -3,7 +3,7 @@ package com.matis.movieapp.ui.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.matis.movieapp.data.models.discoverMovies.Result
+import com.matis.movieapp.data.models.discoverTvShows.Result
 import com.matis.movieapp.data.sources.SearchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.math.log
 
 private const val TAG = "SearchViewModel"
 
@@ -49,6 +48,7 @@ class SearchViewModel @Inject constructor(
         }
         val response = repository.getRecentTrendingMovies()
         if (response.isSuccessful) {
+            Log.d(TAG, "getRecentTrending: ${response.body()!!.results[0]}")
             response.body()!!.results.map {
                 _uiState.value.recentTrendingMovies.add(it)
             }
