@@ -96,9 +96,9 @@
         android:id="@+id/movies_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/baloo"
         android:text="@string/movies"
         android:textSize="22sp"
-        android:fontFamily="@font/baloo"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
         app:layout_constraintTop_toTopOf="@id/guideline_top" />
 
@@ -114,11 +114,19 @@
         android:id="@+id/tv_shows_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/baloo"
         android:text="@string/tv_shows"
         android:textSize="22sp"
-        android:fontFamily="@font/baloo"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
         app:layout_constraintTop_toBottomOf="@id/trending_movies_recycler_view" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/trending_tv_shows_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/tv_shows_title" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_right"
