@@ -1,6 +1,6 @@
 package com.matis.movieapp.data.sources
 
-import com.matis.movieapp.data.models.discoverTvShows.Discover
+import com.matis.movieapp.data.models.Discover.Discover
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response

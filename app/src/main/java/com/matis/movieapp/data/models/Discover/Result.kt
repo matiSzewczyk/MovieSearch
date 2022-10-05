@@ -1,4 +1,4 @@
-package com.matis.movieapp.data.models.discoverTvShows
+package com.matis.movieapp.data.models.Discover
 
 data class Result(
     val adult: Boolean?,
