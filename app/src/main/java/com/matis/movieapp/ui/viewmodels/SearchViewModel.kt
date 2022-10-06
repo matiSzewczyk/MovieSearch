@@ -27,7 +27,6 @@ class SearchViewModel @Inject constructor(
         var recentTrendingMovies: MutableList<Result> = mutableListOf(),
         var recentTrendingTvShows: MutableList<Result> = mutableListOf(),
         var status: UiStatus? = null,
-        var accessToken: String? = null
     ) {
         sealed class UiStatus {
             object IsLoading : UiStatus()
