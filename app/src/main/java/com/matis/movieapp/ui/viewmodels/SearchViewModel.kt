@@ -25,6 +25,7 @@ class SearchViewModel @Inject constructor(
 
     data class UiState(
         var recentTrendingMovies: MutableList<Result> = mutableListOf(),
+        var recentTrendingTvShows: MutableList<Result> = mutableListOf(),
         var status: UiStatus? = null,
         var accessToken: String? = null
     ) {
@@ -65,6 +66,14 @@ class SearchViewModel @Inject constructor(
     private fun getRecentTrendingTvShows() = viewModelScope.launch {
         val response = repository.getRecentTrendingTvShows()
         if (response.isSuccessful) {
+            response.body()!!.results.map {
+                _uiState.value.recentTrendingTvShows.add(it)
+            }
+            _uiState.update {
+                it.copy(
+                    status = UiState.UiStatus.Success
+                )
+            }
             Log.d(TAG, "getRecentTrending: ${response.body()!!.results[0]}")
         } else {
             Log.e(TAG, "getRecentTrending: ${response.errorBody()!!.charStream().readText()}")

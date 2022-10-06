@@ -36,6 +36,7 @@ class SearchFragment : Fragment(), CustomClickInterface {
     private val binding get() = _binding!!
 
     private lateinit var moviesAdapter: MovieAdapter
+    private lateinit var tvShowsAdapter: MovieAdapter
 
     private lateinit var transition: Slide
 
@@ -57,7 +58,8 @@ class SearchFragment : Fragment(), CustomClickInterface {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupRecyclerView()
+        setupMoviesRecyclerView()
+        setupTvShowsRecyclerView()
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -112,12 +114,21 @@ class SearchFragment : Fragment(), CustomClickInterface {
         }
     }
 
-    private fun setupRecyclerView() = binding.trendingMoviesRecyclerView.apply {
+    private fun setupMoviesRecyclerView() = binding.trendingMoviesRecyclerView.apply {
         moviesAdapter = MovieAdapter(
             viewModel.uiState.value.recentTrendingMovies,
             this@SearchFragment
         )
         adapter = moviesAdapter
+        layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+    }
+
+    private fun setupTvShowsRecyclerView() = binding.trendingTvShowsRecyclerView.apply {
+        tvShowsAdapter = MovieAdapter(
+            viewModel.uiState.value.recentTrendingMovies,
+            this@SearchFragment
+        )
+        adapter = tvShowsAdapter
         layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
