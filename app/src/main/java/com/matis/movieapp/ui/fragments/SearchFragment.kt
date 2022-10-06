@@ -68,6 +68,7 @@ class SearchFragment : Fragment(), CustomClickInterface {
                         is SearchViewModel.UiState.UiStatus.Success -> {
                             binding.progressBar.isVisible = false
                             moviesAdapter.notifyDataSetChanged()
+                            tvShowsAdapter.notifyDataSetChanged()
                         }
                         is SearchViewModel.UiState.UiStatus.IsLoading -> {
                             Log.d(
@@ -124,7 +125,7 @@ class SearchFragment : Fragment(), CustomClickInterface {
 
     private fun setupTvShowsRecyclerView() = binding.trendingTvShowsRecyclerView.apply {
         tvShowsAdapter = MovieAdapter(
-            viewModel.uiState.value.recentTrendingMovies,
+            viewModel.uiState.value.recentTrendingTvShows,
             this@SearchFragment
         )
         adapter = tvShowsAdapter
