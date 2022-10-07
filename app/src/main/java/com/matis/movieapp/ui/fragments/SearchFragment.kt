@@ -2,7 +2,6 @@ package com.matis.movieapp.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -25,8 +24,6 @@ import com.matis.movieapp.ui.viewmodels.SearchViewModel
 import com.matis.movieapp.utils.CustomClickInterface
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-
-private const val TAG = "SearchFragment"
 
 class SearchFragment : Fragment(), CustomClickInterface {
 
@@ -66,11 +63,11 @@ class SearchFragment : Fragment(), CustomClickInterface {
                 viewModel.moviesUiState.collectLatest {
                     when (it.status) {
                         is SearchViewModel.UiStatus.Success -> {
-                            binding.progressBar.isVisible = false
+                            binding.moviesProgressBar.isVisible = false
                             moviesAdapter.notifyDataSetChanged()
                         }
                         is SearchViewModel.UiStatus.IsLoading -> {
-                            binding.progressBar.isVisible = true
+                            binding.moviesProgressBar.isVisible = true
                         }
                         else -> Unit
                     }
@@ -83,10 +80,11 @@ class SearchFragment : Fragment(), CustomClickInterface {
                 viewModel.tvShowsUiState.collectLatest {
                     when (it.status) {
                         is SearchViewModel.UiStatus.Success -> {
+                            binding.tvShowsProgressBar.isVisible = false
                             tvShowsAdapter.notifyDataSetChanged()
                         }
                         is SearchViewModel.UiStatus.IsLoading -> {
-
+                            binding.tvShowsProgressBar.isVisible = true
                         }
                         else -> Unit
                     }

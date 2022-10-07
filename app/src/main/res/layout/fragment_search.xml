@@ -83,14 +83,12 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ProgressBar
-        android:id="@+id/progress_bar"
+        android:id="@+id/movies_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/movies_title" />
 
     <TextView
         android:id="@+id/movies_title"
@@ -120,6 +118,14 @@
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
         app:layout_constraintTop_toBottomOf="@id/trending_movies_recycler_view" />
+
+    <ProgressBar
+        android:id="@+id/tv_shows_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_shows_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/trending_tv_shows_recycler_view"
