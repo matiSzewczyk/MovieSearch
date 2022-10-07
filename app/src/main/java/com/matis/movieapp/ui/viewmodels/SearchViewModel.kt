@@ -29,7 +29,6 @@ class SearchViewModel @Inject constructor(
     sealed class UiStatus {
         object IsLoading : UiStatus()
         object Success : UiStatus()
-        data class Error(val errorMessage: String) : UiStatus()
     }
 
     data class MoviesUiState(

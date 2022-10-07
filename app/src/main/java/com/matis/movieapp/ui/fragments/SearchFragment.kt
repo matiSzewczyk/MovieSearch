@@ -70,10 +70,6 @@ class SearchFragment : Fragment(), CustomClickInterface {
                             moviesAdapter.notifyDataSetChanged()
                         }
                         is SearchViewModel.UiStatus.IsLoading -> {
-                            Log.d(
-                                TAG,
-                                "onViewCreated: Progress bar visible"
-                            )
                             binding.progressBar.isVisible = true
                         }
                         else -> Unit
@@ -97,7 +93,6 @@ class SearchFragment : Fragment(), CustomClickInterface {
                 }
             }
         }
-
 
         binding.apply {
             searchButton.setOnClickListener {
