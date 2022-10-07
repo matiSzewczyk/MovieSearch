@@ -32,31 +32,31 @@ class SearchViewModel @Inject constructor(
     }
 
     data class MoviesUiState(
-        var recentTrendingMovies: MutableList<Result> = mutableListOf(),
+        var trendingMovies: MutableList<Result> = mutableListOf(),
         var status: UiStatus? = null,
     )
 
     data class TvShowsUiState(
-        var recentTrendingTvShows: MutableList<Result> = mutableListOf(),
+        var trendingTvShows: MutableList<Result> = mutableListOf(),
         var status: UiStatus? = null,
     )
 
     init {
-        getRecentTrendingMovies()
-        getRecentTrendingTvShows()
+        getTrendingMovies()
+        getTrendingTvShows()
     }
 
-    private fun getRecentTrendingMovies() = viewModelScope.launch {
+    private fun getTrendingMovies() = viewModelScope.launch {
         _moviesUiState.update {
             it.copy(
                 status = UiStatus.IsLoading
             )
         }
-        val response = repository.getRecentTrendingMovies()
+        val response = repository.getTrendingMovies()
         if (response.isSuccessful) {
-            Log.d(TAG, "getRecentTrending: ${response.body()!!.results[0]}")
+            Log.d(TAG, "getTrending: ${response.body()!!.results[0]}")
             response.body()!!.results.map {
-                _moviesUiState.value.recentTrendingMovies.add(it)
+                _moviesUiState.value.trendingMovies.add(it)
             }
             _moviesUiState.update {
                 it.copy(
@@ -64,29 +64,29 @@ class SearchViewModel @Inject constructor(
                 )
             }
         } else {
-            Log.e(TAG, "getRecentTrending: ${response.errorBody()!!.charStream().readText()}")
+            Log.e(TAG, "getTrending: ${response.errorBody()!!.charStream().readText()}")
         }
     }
 
-    private fun getRecentTrendingTvShows() = viewModelScope.launch {
+    private fun getTrendingTvShows() = viewModelScope.launch {
         _tvShowsUiState.update {
             it.copy(
                 status = UiStatus.IsLoading
             )
         }
-        val response = repository.getRecentTrendingTvShows()
+        val response = repository.getTrendingTvShows()
         if (response.isSuccessful) {
             response.body()!!.results.map {
-                _tvShowsUiState.value.recentTrendingTvShows.add(it)
+                _tvShowsUiState.value.trendingTvShows.add(it)
             }
             _tvShowsUiState.update {
                 it.copy(
                     status = UiStatus.Success
                 )
             }
-            Log.d(TAG, "getRecentTrending: ${response.body()!!.results[0]}")
+            Log.d(TAG, "getTrending: ${response.body()!!.results[0]}")
         } else {
-            Log.e(TAG, "getRecentTrending: ${response.errorBody()!!.charStream().readText()}")
+            Log.e(TAG, "getTrending: ${response.errorBody()!!.charStream().readText()}")
         }
     }
 

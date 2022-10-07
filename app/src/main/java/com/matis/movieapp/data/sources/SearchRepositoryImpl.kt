@@ -10,15 +10,15 @@ class SearchRepositoryImpl @Inject constructor(
     private val homeApi: HomeApi
 ) : SearchRepository {
 
-    override suspend fun getRecentTrendingMovies(): Response<Discover> {
+    override suspend fun getTrendingMovies(): Response<Discover> {
         return withContext(Dispatchers.IO) {
-            homeApi.getRecentTrendingMovies()
+            homeApi.getTrendingMovies()
         }
     }
 
-    override suspend fun getRecentTrendingTvShows(): Response<Discover> {
+    override suspend fun getTrendingTvShows(): Response<Discover> {
         return withContext(Dispatchers.IO) {
-            homeApi.getRecentTrendingTvShows()
+            homeApi.getTrendingTvShows()
         }
     }
 }

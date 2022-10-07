@@ -4,6 +4,6 @@ import com.matis.movieapp.data.models.Discover.Discover
 import retrofit2.Response
 
 interface SearchRepository {
-    suspend fun getRecentTrendingMovies(): Response<Discover>
-    suspend fun getRecentTrendingTvShows(): Response<Discover>
+    suspend fun getTrendingMovies(): Response<Discover>
+    suspend fun getTrendingTvShows(): Response<Discover>
 }

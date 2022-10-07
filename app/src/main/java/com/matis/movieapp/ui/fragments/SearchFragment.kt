@@ -119,7 +119,7 @@ class SearchFragment : Fragment(), CustomClickInterface {
 
     private fun setupMoviesRecyclerView() = binding.trendingMoviesRecyclerView.apply {
         moviesAdapter = MovieAdapter(
-            viewModel.moviesUiState.value.recentTrendingMovies,
+            viewModel.moviesUiState.value.trendingMovies,
             this@SearchFragment
         )
         adapter = moviesAdapter
@@ -128,7 +128,7 @@ class SearchFragment : Fragment(), CustomClickInterface {
 
     private fun setupTvShowsRecyclerView() = binding.trendingTvShowsRecyclerView.apply {
         tvShowsAdapter = MovieAdapter(
-            viewModel.tvShowsUiState.value.recentTrendingTvShows,
+            viewModel.tvShowsUiState.value.trendingTvShows,
             this@SearchFragment
         )
         adapter = tvShowsAdapter

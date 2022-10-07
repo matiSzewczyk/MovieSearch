@@ -13,12 +13,12 @@ interface HomeApi {
         "discover/movie?language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate" +
                 "&with_original_language=en"
     )
-    suspend fun getRecentTrendingMovies(): Response<Discover>
+    suspend fun getTrendingMovies(): Response<Discover>
 
     @Headers("Authorization: Bearer ${BuildConfig.API_KEY}")
     @GET(
         "discover/tv?language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate" +
                 "&with_original_language=en"
     )
-    suspend fun getRecentTrendingTvShows(): Response<Discover>
+    suspend fun getTrendingTvShows(): Response<Discover>
 }
