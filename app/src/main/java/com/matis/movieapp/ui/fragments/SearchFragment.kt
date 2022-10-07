@@ -63,31 +63,41 @@ class SearchFragment : Fragment(), CustomClickInterface {
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collectLatest {
+                viewModel.moviesUiState.collectLatest {
                     when (it.status) {
-                        is SearchViewModel.UiState.UiStatus.Success -> {
+                        is SearchViewModel.UiStatus.Success -> {
                             binding.progressBar.isVisible = false
                             moviesAdapter.notifyDataSetChanged()
-                            tvShowsAdapter.notifyDataSetChanged()
                         }
-                        is SearchViewModel.UiState.UiStatus.IsLoading -> {
+                        is SearchViewModel.UiStatus.IsLoading -> {
                             Log.d(
                                 TAG,
                                 "onViewCreated: Progress bar visible"
                             )
                             binding.progressBar.isVisible = true
                         }
-                        is SearchViewModel.UiState.UiStatus.Error -> {
-                            Log.e(
-                                TAG,
-                                "Error: ${(it.status as SearchViewModel.UiState.UiStatus.Error).errorMessage}"
-                            )
+                        else -> Unit
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.tvShowsUiState.collectLatest {
+                    when (it.status) {
+                        is SearchViewModel.UiStatus.Success -> {
+                            tvShowsAdapter.notifyDataSetChanged()
+                        }
+                        is SearchViewModel.UiStatus.IsLoading -> {
+
                         }
                         else -> Unit
                     }
                 }
             }
         }
+
 
         binding.apply {
             searchButton.setOnClickListener {
@@ -116,7 +126,7 @@ class SearchFragment : Fragment(), CustomClickInterface {
 
     private fun setupMoviesRecyclerView() = binding.trendingMoviesRecyclerView.apply {
         moviesAdapter = MovieAdapter(
-            viewModel.uiState.value.recentTrendingMovies,
+            viewModel.moviesUiState.value.recentTrendingMovies,
             this@SearchFragment
         )
         adapter = moviesAdapter
@@ -125,7 +135,7 @@ class SearchFragment : Fragment(), CustomClickInterface {
 
     private fun setupTvShowsRecyclerView() = binding.trendingTvShowsRecyclerView.apply {
         tvShowsAdapter = MovieAdapter(
-            viewModel.uiState.value.recentTrendingTvShows,
+            viewModel.tvShowsUiState.value.recentTrendingTvShows,
             this@SearchFragment
         )
         adapter = tvShowsAdapter

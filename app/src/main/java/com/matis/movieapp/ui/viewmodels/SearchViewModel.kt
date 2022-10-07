@@ -20,41 +20,48 @@ class SearchViewModel @Inject constructor(
     private val repository: SearchRepository
 ) : ViewModel() {
 
-    private var _uiState = MutableStateFlow(UiState())
-    val uiState: StateFlow<UiState> get() = _uiState.asStateFlow()
+    private var _tvShowsUiState = MutableStateFlow(TvShowsUiState())
+    val tvShowsUiState: StateFlow<TvShowsUiState> get() = _tvShowsUiState.asStateFlow()
 
-    data class UiState(
-        var recentTrendingMovies: MutableList<Result> = mutableListOf(),
-        var recentTrendingTvShows: MutableList<Result> = mutableListOf(),
-        var status: UiStatus? = null,
-    ) {
-        sealed class UiStatus {
-            object IsLoading : UiStatus()
-            object Success : UiStatus()
-            data class Error(val errorMessage: String) : UiStatus()
-        }
+    private var _moviesUiState = MutableStateFlow(MoviesUiState())
+    val moviesUiState: StateFlow<MoviesUiState> get() = _moviesUiState.asStateFlow()
+
+    sealed class UiStatus {
+        object IsLoading : UiStatus()
+        object Success : UiStatus()
+        data class Error(val errorMessage: String) : UiStatus()
     }
 
+    data class MoviesUiState(
+        var recentTrendingMovies: MutableList<Result> = mutableListOf(),
+        var status: UiStatus? = null,
+    )
+
+    data class TvShowsUiState(
+        var recentTrendingTvShows: MutableList<Result> = mutableListOf(),
+        var status: UiStatus? = null,
+    )
+
     init {
-        getRecentTrending()
+        getRecentTrendingMovies()
         getRecentTrendingTvShows()
     }
 
-    private fun getRecentTrending() = viewModelScope.launch {
-        _uiState.update {
+    private fun getRecentTrendingMovies() = viewModelScope.launch {
+        _moviesUiState.update {
             it.copy(
-                status = UiState.UiStatus.IsLoading
+                status = UiStatus.IsLoading
             )
         }
         val response = repository.getRecentTrendingMovies()
         if (response.isSuccessful) {
             Log.d(TAG, "getRecentTrending: ${response.body()!!.results[0]}")
             response.body()!!.results.map {
-                _uiState.value.recentTrendingMovies.add(it)
+                _moviesUiState.value.recentTrendingMovies.add(it)
             }
-            _uiState.update {
+            _moviesUiState.update {
                 it.copy(
-                    status = UiState.UiStatus.Success
+                    status = UiStatus.Success
                 )
             }
         } else {
@@ -63,14 +70,19 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun getRecentTrendingTvShows() = viewModelScope.launch {
+        _tvShowsUiState.update {
+            it.copy(
+                status = UiStatus.IsLoading
+            )
+        }
         val response = repository.getRecentTrendingTvShows()
         if (response.isSuccessful) {
             response.body()!!.results.map {
-                _uiState.value.recentTrendingTvShows.add(it)
+                _tvShowsUiState.value.recentTrendingTvShows.add(it)
             }
-            _uiState.update {
+            _tvShowsUiState.update {
                 it.copy(
-                    status = UiState.UiStatus.Success
+                    status = UiStatus.Success
                 )
             }
             Log.d(TAG, "getRecentTrending: ${response.body()!!.results[0]}")
