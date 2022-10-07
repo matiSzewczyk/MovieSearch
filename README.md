@@ -2,7 +2,7 @@
 
 ### Work in progress
 
-- Browse recently trending movies
+- Browse trending movies
 - Search for your favorites
 
 ## Screenshots
