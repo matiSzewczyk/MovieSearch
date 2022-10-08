@@ -4,6 +4,6 @@
     <string name="search_title">Search</string>
     <string name="home">Home</string>
     <string name="see_all">See all</string>
-    <string name="movies">Movies</string>
-    <string name="tv_shows">TV Shows</string>
+    <string name="trending_movies">Trending Movies</string>
+    <string name="trending_tv_shows">Trending TV Shows</string>
 </resources>
