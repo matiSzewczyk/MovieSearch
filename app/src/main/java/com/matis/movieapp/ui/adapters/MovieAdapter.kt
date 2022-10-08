@@ -20,7 +20,10 @@ class MovieAdapter(
         init {
             apply {
                 itemView.setOnClickListener {
-                    customClickInterface.onClickListener(movies[adapterPosition].id)
+                    customClickInterface.onClickListener(
+                        movies[adapterPosition].id,
+                        movies[adapterPosition].poster_path
+                    )
                 }
             }
         }

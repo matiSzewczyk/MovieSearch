@@ -231,8 +231,8 @@ class SearchFragment : Fragment(), CustomClickInterface {
         _binding = null
     }
 
-    override fun onClickListener(id: Int) {
-        val action = SearchFragmentDirections.actionSearchFragmentToMovieFragment(id)
+    override fun onClickListener(id: Int, poster: String) {
+        val action = SearchFragmentDirections.actionSearchFragmentToMovieFragment(poster, id)
         findNavController().navigate(action)
     }
 }
