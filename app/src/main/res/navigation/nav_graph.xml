@@ -11,8 +11,7 @@
         <action
             android:id="@+id/action_searchFragment_to_movieFragment"
             app:destination="@id/movieFragment"
-            app:popUpTo="@id/movieFragment"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/movieFragment" />
     </fragment>
     <fragment
         android:id="@+id/movieFragment"
