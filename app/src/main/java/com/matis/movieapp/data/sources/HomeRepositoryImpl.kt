@@ -6,9 +6,9 @@ import kotlinx.coroutines.withContext
 import retrofit2.Response
 import javax.inject.Inject
 
-class SearchRepositoryImpl @Inject constructor(
+class HomeRepositoryImpl @Inject constructor(
     private val homeApi: HomeApi
-) : SearchRepository {
+) : HomeRepository {
 
     override suspend fun getTrendingMovies(): Response<Discover> {
         return withContext(Dispatchers.IO) {

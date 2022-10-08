@@ -19,18 +19,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.Slide
 import androidx.transition.TransitionManager
-import com.matis.movieapp.databinding.FragmentSearchBinding
+import com.matis.movieapp.databinding.FragmentHomeBinding
 import com.matis.movieapp.ui.adapters.MovieAdapter
-import com.matis.movieapp.ui.viewmodels.SearchViewModel
+import com.matis.movieapp.ui.viewmodels.HomeViewModel
 import com.matis.movieapp.utils.CustomClickInterface
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class SearchFragment : Fragment(), CustomClickInterface {
+class HomeFragment : Fragment(), CustomClickInterface {
 
-    private val viewModel: SearchViewModel by activityViewModels()
+    private val viewModel: HomeViewModel by activityViewModels()
 
-    private var _binding: FragmentSearchBinding? = null
+    private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var moviesAdapter: MovieAdapter
@@ -51,7 +51,7 @@ class SearchFragment : Fragment(), CustomClickInterface {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -68,11 +68,11 @@ class SearchFragment : Fragment(), CustomClickInterface {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.moviesUiState.collectLatest {
                     when (it.status) {
-                        is SearchViewModel.UiStatus.Success -> {
+                        is HomeViewModel.UiStatus.Success -> {
                             binding.moviesProgressBar.isVisible = false
                             moviesAdapter.notifyDataSetChanged()
                         }
-                        is SearchViewModel.UiStatus.IsLoading -> {
+                        is HomeViewModel.UiStatus.IsLoading -> {
                             binding.moviesProgressBar.isVisible = true
                         }
                         else -> Unit
@@ -85,11 +85,11 @@ class SearchFragment : Fragment(), CustomClickInterface {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.tvShowsUiState.collectLatest {
                     when (it.status) {
-                        is SearchViewModel.UiStatus.Success -> {
+                        is HomeViewModel.UiStatus.Success -> {
                             binding.tvShowsProgressBar.isVisible = false
                             tvShowsAdapter.notifyDataSetChanged()
                         }
-                        is SearchViewModel.UiStatus.IsLoading -> {
+                        is HomeViewModel.UiStatus.IsLoading -> {
                             binding.tvShowsProgressBar.isVisible = true
                         }
                         else -> Unit
@@ -102,11 +102,11 @@ class SearchFragment : Fragment(), CustomClickInterface {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.topRatedMoviesUiState.collectLatest {
                     when (it.status) {
-                        is SearchViewModel.UiStatus.Success -> {
+                        is HomeViewModel.UiStatus.Success -> {
                             binding.topRatedMoviesProgressBar.isVisible = false
                             topRatedMoviesAdapter.notifyDataSetChanged()
                         }
-                        is SearchViewModel.UiStatus.IsLoading -> {
+                        is HomeViewModel.UiStatus.IsLoading -> {
                             binding.topRatedMoviesProgressBar.isVisible = true
                         }
                         else -> Unit
@@ -119,11 +119,11 @@ class SearchFragment : Fragment(), CustomClickInterface {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.topRatedTvShowsUiState.collectLatest {
                     when (it.status) {
-                        is SearchViewModel.UiStatus.Success -> {
+                        is HomeViewModel.UiStatus.Success -> {
                             binding.topRatedTvShowsProgressBar.isVisible = false
                             topRatedTvShowsAdapter.notifyDataSetChanged()
                         }
-                        is SearchViewModel.UiStatus.IsLoading -> {
+                        is HomeViewModel.UiStatus.IsLoading -> {
                             binding.topRatedMoviesProgressBar.isVisible = true
                         }
                         else -> Unit
@@ -160,7 +160,7 @@ class SearchFragment : Fragment(), CustomClickInterface {
     private fun setupMoviesRecyclerView() = binding.trendingMoviesRecyclerView.apply {
         moviesAdapter = MovieAdapter(
             viewModel.moviesUiState.value.trendingMovies,
-            this@SearchFragment
+            this@HomeFragment
         )
         adapter = moviesAdapter
         layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -169,7 +169,7 @@ class SearchFragment : Fragment(), CustomClickInterface {
     private fun setupTvShowsRecyclerView() = binding.trendingTvShowsRecyclerView.apply {
         tvShowsAdapter = MovieAdapter(
             viewModel.tvShowsUiState.value.trendingTvShows,
-            this@SearchFragment
+            this@HomeFragment
         )
         adapter = tvShowsAdapter
         layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -178,7 +178,7 @@ class SearchFragment : Fragment(), CustomClickInterface {
     private fun setupTopRatedMoviesRecyclerView() = binding.topRatedMoviesRecyclerView.apply {
         topRatedMoviesAdapter = MovieAdapter(
             viewModel.topRatedMoviesUiState.value.topRatedMovies,
-            this@SearchFragment
+            this@HomeFragment
         )
         adapter = topRatedMoviesAdapter
         layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -187,7 +187,7 @@ class SearchFragment : Fragment(), CustomClickInterface {
     private fun setupTopRatedTvShowsRecyclerView() = binding.topRatedTvShowsRecyclerView.apply {
         topRatedTvShowsAdapter = MovieAdapter(
             viewModel.topRatedTvShowsUiState.value.topRatedTvShows,
-            this@SearchFragment
+            this@HomeFragment
         )
         adapter = topRatedTvShowsAdapter
         layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -232,7 +232,7 @@ class SearchFragment : Fragment(), CustomClickInterface {
     }
 
     override fun onClickListener(id: Int, name: String?) {
-        val action = SearchFragmentDirections.actionSearchFragmentToMovieFragment(name, id)
+        val action = HomeFragmentDirections.actionSearchFragmentToMovieFragment(name, id)
         findNavController().navigate(action)
     }
 }

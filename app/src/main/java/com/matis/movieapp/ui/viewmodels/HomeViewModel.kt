@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.matis.movieapp.data.models.Discover.Result
-import com.matis.movieapp.data.sources.SearchRepository
+import com.matis.movieapp.data.sources.HomeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,8 +16,8 @@ import javax.inject.Inject
 private const val TAG = "SearchViewModel"
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(
-    private val repository: SearchRepository
+class HomeViewModel @Inject constructor(
+    private val repository: HomeRepository
 ) : ViewModel() {
 
     sealed class UiStatus {

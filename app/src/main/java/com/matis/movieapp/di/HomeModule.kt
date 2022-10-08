@@ -2,8 +2,8 @@ package com.matis.movieapp.di
 
 import com.matis.movieapp.data.sources.HomeApi
 
-import com.matis.movieapp.data.sources.SearchRepository
-import com.matis.movieapp.data.sources.SearchRepositoryImpl
+import com.matis.movieapp.data.sources.HomeRepository
+import com.matis.movieapp.data.sources.HomeRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,15 +19,15 @@ class HomeModule {
 
     @Provides
     @Singleton
-    fun provideSearchRepository(
+    fun provideHomeRepository(
         homeApi: HomeApi
-    ) : SearchRepository {
-        return SearchRepositoryImpl(homeApi)
+    ) : HomeRepository {
+        return HomeRepositoryImpl(homeApi)
     }
 
     @Provides
     @Singleton
-    fun provideAllegroSearchApi(): HomeApi {
+    fun provideMovieDbApi(): HomeApi {
         return Retrofit.Builder()
             .baseUrl("https://api.themoviedb.org/3/")
             .addConverterFactory(GsonConverterFactory.create())
