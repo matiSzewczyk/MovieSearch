@@ -25,10 +25,10 @@ class MovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Glide.with(binding.moviePoster.context)
-            .load("https://image.tmdb.org/t/p/w500" + arguments?.get("poster").toString())
-            .into(binding.moviePoster)
-        binding.movieTitle.text = arguments?.get("id").toString()
+//        Glide.with(binding.moviePoster.context)
+//            .load("https://image.tmdb.org/t/p/w500" + arguments?.get("poster").toString())
+//            .into(binding.moviePoster)
+        binding.movieTitle.text = arguments?.get("name").toString()
     }
 
     override fun onDestroyView() {

@@ -21,7 +21,8 @@ class MovieAdapter(
             apply {
                 itemView.setOnClickListener {
                     customClickInterface.onClickListener(
-                        movies[adapterPosition].id
+                        movies[adapterPosition].id,
+                        movies[adapterPosition].name
                     )
                 }
             }

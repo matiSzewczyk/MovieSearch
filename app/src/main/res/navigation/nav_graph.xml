@@ -10,17 +10,21 @@
         android:label="SearchFragment">
         <action
             android:id="@+id/action_searchFragment_to_movieFragment"
+            app:destination="@id/movieFragment"
             app:popUpTo="@id/movieFragment"
-            app:popUpToInclusive="true"
-            app:destination="@id/movieFragment" />
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/movieFragment"
         android:name="com.matis.movieapp.ui.fragments.MovieFragment"
-        android:label="MovieFragment" >
+        android:label="MovieFragment">
         <argument
             android:name="id"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
+            android:name="name"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>
