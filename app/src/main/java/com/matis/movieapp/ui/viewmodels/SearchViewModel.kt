@@ -40,6 +40,11 @@ class SearchViewModel @Inject constructor(
         var status: UiStatus? = null,
     )
 
+    data class TopRatedTvShowsUiState(
+        var topRatedTvShows: MutableList<Result> = mutableListOf(),
+        var status: UiStatus? = null,
+    )
+
     private var _tvShowsUiState = MutableStateFlow(TvShowsUiState())
     val tvShowsUiState: StateFlow<TvShowsUiState> get() = _tvShowsUiState.asStateFlow()
 
@@ -49,10 +54,36 @@ class SearchViewModel @Inject constructor(
     private var _topRatedMoviesUiState = MutableStateFlow(TopRatedMoviesUiState())
     val topRatedMoviesUiState: StateFlow<TopRatedMoviesUiState> get() = _topRatedMoviesUiState.asStateFlow()
 
+    private var _topRatedTvShowsUiState = MutableStateFlow(TopRatedTvShowsUiState())
+    val topRatedTvShowsUiState: StateFlow<TopRatedTvShowsUiState> get() = _topRatedTvShowsUiState.asStateFlow()
+
     init {
         getTrendingMovies()
         getTrendingTvShows()
         getTopRatedMovies()
+        getTopRatedTvShows()
+    }
+
+    private fun getTopRatedTvShows() = viewModelScope.launch {
+        _topRatedTvShowsUiState.update {
+            it.copy(
+                status = UiStatus.IsLoading
+            )
+        }
+        val response = repository.getTopRatedTvShows()
+        if (response.isSuccessful) {
+            response.body()!!.results.map {
+                _topRatedTvShowsUiState.value.topRatedTvShows.add(it)
+            }
+            _topRatedTvShowsUiState.update {
+                it.copy(
+                    status = UiStatus.Success
+                )
+            }
+            Log.d(TAG, "getTopRatedTvShows: ${response.body()!!.results}")
+        } else {
+            Log.e(TAG, "getTopRatedTvShows: ${response.errorBody()!!.charStream().readText()}")
+        }
     }
 
     private fun getTopRatedMovies() = viewModelScope.launch {
@@ -63,7 +94,6 @@ class SearchViewModel @Inject constructor(
         }
         val response = repository.getTopRatedMovies()
         if (response.isSuccessful) {
-            Log.d(TAG, "getTopRatedMovies: ${response.body()!!.results[0]}")
             response.body()!!.results.map {
                 _topRatedMoviesUiState.value.topRatedMovies.add(it)
             }
@@ -72,6 +102,7 @@ class SearchViewModel @Inject constructor(
                     status = UiStatus.Success
                 )
             }
+            Log.d(TAG, "getTopRatedMovies: ${response.body()!!.results}")
         } else {
             Log.e(TAG, "getTopRatedMovies: ${response.errorBody()!!.charStream().readText()}")
         }
@@ -85,7 +116,6 @@ class SearchViewModel @Inject constructor(
         }
         val response = repository.getTrendingMovies()
         if (response.isSuccessful) {
-            Log.d(TAG, "getTrending: ${response.body()!!.results[0]}")
             response.body()!!.results.map {
                 _moviesUiState.value.trendingMovies.add(it)
             }
@@ -94,6 +124,7 @@ class SearchViewModel @Inject constructor(
                     status = UiStatus.Success
                 )
             }
+            Log.d(TAG, "getTrending: ${response.body()!!.results}")
         } else {
             Log.e(TAG, "getTrending: ${response.errorBody()!!.charStream().readText()}")
         }
@@ -115,7 +146,7 @@ class SearchViewModel @Inject constructor(
                     status = UiStatus.Success
                 )
             }
-            Log.d(TAG, "getTrending: ${response.body()!!.results[0]}")
+            Log.d(TAG, "getTrending: ${response.body()!!.results}")
         } else {
             Log.e(TAG, "getTrending: ${response.errorBody()!!.charStream().readText()}")
         }

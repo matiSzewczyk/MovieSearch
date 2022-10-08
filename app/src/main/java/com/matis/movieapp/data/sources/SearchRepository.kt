@@ -7,4 +7,5 @@ interface SearchRepository {
     suspend fun getTrendingMovies(): Response<Discover>
     suspend fun getTrendingTvShows(): Response<Discover>
     suspend fun getTopRatedMovies(): Response<Discover>
+    suspend fun getTopRatedTvShows(): Response<Discover>
 }

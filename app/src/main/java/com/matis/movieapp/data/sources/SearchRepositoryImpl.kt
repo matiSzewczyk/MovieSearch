@@ -27,4 +27,10 @@ class SearchRepositoryImpl @Inject constructor(
             homeApi.getTopRatedMovies()
         }
     }
+
+    override suspend fun getTopRatedTvShows(): Response<Discover> {
+        return withContext(Dispatchers.IO) {
+            homeApi.getTopRatedTvShows()
+        }
+    }
 }
