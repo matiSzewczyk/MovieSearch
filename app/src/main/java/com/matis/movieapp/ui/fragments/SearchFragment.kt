@@ -1,5 +1,6 @@
 package com.matis.movieapp.ui.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
@@ -53,6 +54,7 @@ class SearchFragment : Fragment(), CustomClickInterface {
         return binding.root
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
