@@ -1,12 +1,63 @@
 package com.matis.movieapp.ui.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.matis.movieapp.data.models.Details.movie.DetailsMovie
 import com.matis.movieapp.data.sources.details.DetailsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import retrofit2.Response
 import javax.inject.Inject
+
+private const val TAG = "DetailsViewModel"
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
     private val repository: DetailsRepository
 ) : ViewModel() {
+
+    data class UiState(
+        var poster: String? = null,
+        var title: String? = null
+    )
+
+    private var _uiState = MutableStateFlow(UiState())
+    val uiState: StateFlow<UiState> get() = _uiState.asStateFlow()
+
+    fun setUiData(name: String?, id: Int) {
+        viewModelScope.launch {
+            if (name == null) {
+                val response = repository.getMovie(id)
+                if (response.isSuccessful) {
+                    Log.d(TAG, "setUiData: ${response.body()!!}")
+                    _uiState.update {
+                        it.copy(
+                            poster = response.body()!!.poster_path,
+                            title = response.body()!!.title
+                        )
+                    }
+                } else {
+                    Log.e(TAG, "setUiData: ${response.errorBody()!!.charStream().readText()}")
+                }
+            } else {
+                val response = repository.getTvShow(id)
+                if (response.isSuccessful) {
+                    Log.d(TAG, "setUiData: ${response.body()!!}")
+                    _uiState.update {
+                        it.copy(
+                            poster = response.body()!!.poster_path,
+                            title = response.body()!!.name
+                        )
+                    }
+                } else {
+                    Log.e(TAG, "setUiData: ${response.errorBody()!!.charStream().readText()}")
+                }
+            }
+        }
+    }
 }

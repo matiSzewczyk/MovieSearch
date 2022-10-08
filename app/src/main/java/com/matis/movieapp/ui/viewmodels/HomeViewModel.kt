@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val TAG = "SearchViewModel"
+private const val TAG = "HomeViewModel"
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -124,9 +124,9 @@ class HomeViewModel @Inject constructor(
                     status = UiStatus.Success
                 )
             }
-            Log.d(TAG, "getTrending: ${response.body()!!.results}")
+            Log.d(TAG, "getTrendingMovies: ${response.body()!!.results}")
         } else {
-            Log.e(TAG, "getTrending: ${response.errorBody()!!.charStream().readText()}")
+            Log.e(TAG, "getTrendingMovies: ${response.errorBody()!!.charStream().readText()}")
         }
     }
 
@@ -146,9 +146,9 @@ class HomeViewModel @Inject constructor(
                     status = UiStatus.Success
                 )
             }
-            Log.d(TAG, "getTrending: ${response.body()!!.results}")
+            Log.d(TAG, "getTrendingTvShows: ${response.body()!!.results}")
         } else {
-            Log.e(TAG, "getTrending: ${response.errorBody()!!.charStream().readText()}")
+            Log.e(TAG, "getTrendingTvShows: ${response.errorBody()!!.charStream().readText()}")
         }
     }
 
