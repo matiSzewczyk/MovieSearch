@@ -1,9 +1,9 @@
 package com.matis.movieapp.di
 
+import com.matis.movieapp.data.sources.details.DetailsApi
+import com.matis.movieapp.data.sources.details.DetailsRepository
+import com.matis.movieapp.data.sources.details.DetailsRepositoryImpl
 import com.matis.movieapp.data.sources.home.HomeApi
-
-import com.matis.movieapp.data.sources.home.HomeRepository
-import com.matis.movieapp.data.sources.home.HomeRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,19 +15,19 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class HomeModule {
+class DetailsModule {
 
     @Provides
     @Singleton
-    fun provideHomeRepository(
-        homeApi: HomeApi
-    ) : HomeRepository {
-        return HomeRepositoryImpl(homeApi)
+    fun provideDetailsRepository(
+        detailsApi: DetailsApi
+    ): DetailsRepository {
+        return DetailsRepositoryImpl(detailsApi)
     }
 
     @Provides
     @Singleton
-    fun provideMovieDbApi(): HomeApi {
+    fun provideMovieDbApi(): DetailsApi {
         return Retrofit.Builder()
             .baseUrl("https://api.themoviedb.org/3/")
             .addConverterFactory(GsonConverterFactory.create())

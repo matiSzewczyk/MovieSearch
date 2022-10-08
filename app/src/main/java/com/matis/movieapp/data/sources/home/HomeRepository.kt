@@ -1,4 +1,4 @@
-package com.matis.movieapp.data.sources
+package com.matis.movieapp.data.sources.home
 
 import com.matis.movieapp.data.models.Discover.Discover
 import retrofit2.Response
