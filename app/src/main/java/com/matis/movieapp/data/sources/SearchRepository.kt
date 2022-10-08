@@ -6,4 +6,5 @@ import retrofit2.Response
 interface SearchRepository {
     suspend fun getTrendingMovies(): Response<Discover>
     suspend fun getTrendingTvShows(): Response<Discover>
+    suspend fun getTopRatedMovies(): Response<Discover>
 }

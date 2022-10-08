@@ -34,6 +34,7 @@ class SearchFragment : Fragment(), CustomClickInterface {
 
     private lateinit var moviesAdapter: MovieAdapter
     private lateinit var tvShowsAdapter: MovieAdapter
+    private lateinit var topRatedMoviesAdapter: MovieAdapter
 
     private lateinit var transition: Slide
 
@@ -57,6 +58,7 @@ class SearchFragment : Fragment(), CustomClickInterface {
 
         setupMoviesRecyclerView()
         setupTvShowsRecyclerView()
+        setupTopRatedMoviesRecyclerView()
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -85,6 +87,23 @@ class SearchFragment : Fragment(), CustomClickInterface {
                         }
                         is SearchViewModel.UiStatus.IsLoading -> {
                             binding.tvShowsProgressBar.isVisible = true
+                        }
+                        else -> Unit
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.topRatedMoviesUiState.collectLatest {
+                    when (it.status) {
+                        is SearchViewModel.UiStatus.Success -> {
+                            binding.topRatedMoviesProgressBar.isVisible = false
+                            topRatedMoviesAdapter.notifyDataSetChanged()
+                        }
+                        is SearchViewModel.UiStatus.IsLoading -> {
+                            binding.topRatedMoviesProgressBar.isVisible = true
                         }
                         else -> Unit
                     }
@@ -132,6 +151,15 @@ class SearchFragment : Fragment(), CustomClickInterface {
             this@SearchFragment
         )
         adapter = tvShowsAdapter
+        layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+    }
+
+    private fun setupTopRatedMoviesRecyclerView() = binding.topRatedMoviesRecyclerView.apply {
+        topRatedMoviesAdapter = MovieAdapter(
+            viewModel.topRatedMoviesUiState.value.topRatedMovies,
+            this@SearchFragment
+        )
+        adapter = topRatedMoviesAdapter
         layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 

@@ -20,12 +20,6 @@ class SearchViewModel @Inject constructor(
     private val repository: SearchRepository
 ) : ViewModel() {
 
-    private var _tvShowsUiState = MutableStateFlow(TvShowsUiState())
-    val tvShowsUiState: StateFlow<TvShowsUiState> get() = _tvShowsUiState.asStateFlow()
-
-    private var _moviesUiState = MutableStateFlow(MoviesUiState())
-    val moviesUiState: StateFlow<MoviesUiState> get() = _moviesUiState.asStateFlow()
-
     sealed class UiStatus {
         object IsLoading : UiStatus()
         object Success : UiStatus()
@@ -41,9 +35,46 @@ class SearchViewModel @Inject constructor(
         var status: UiStatus? = null,
     )
 
+    data class TopRatedMoviesUiState(
+        var topRatedMovies: MutableList<Result> = mutableListOf(),
+        var status: UiStatus? = null,
+    )
+
+    private var _tvShowsUiState = MutableStateFlow(TvShowsUiState())
+    val tvShowsUiState: StateFlow<TvShowsUiState> get() = _tvShowsUiState.asStateFlow()
+
+    private var _moviesUiState = MutableStateFlow(MoviesUiState())
+    val moviesUiState: StateFlow<MoviesUiState> get() = _moviesUiState.asStateFlow()
+
+    private var _topRatedMoviesUiState = MutableStateFlow(TopRatedMoviesUiState())
+    val topRatedMoviesUiState: StateFlow<TopRatedMoviesUiState> get() = _topRatedMoviesUiState.asStateFlow()
+
     init {
         getTrendingMovies()
         getTrendingTvShows()
+        getTopRatedMovies()
+    }
+
+    private fun getTopRatedMovies() = viewModelScope.launch {
+        _topRatedMoviesUiState.update {
+            it.copy(
+                status = UiStatus.IsLoading
+            )
+        }
+        val response = repository.getTopRatedMovies()
+        if (response.isSuccessful) {
+            Log.d(TAG, "getTopRatedMovies: ${response.body()!!.results[0]}")
+            response.body()!!.results.map {
+                _topRatedMoviesUiState.value.topRatedMovies.add(it)
+            }
+            _topRatedMoviesUiState.update {
+                it.copy(
+                    status = UiStatus.Success
+                )
+            }
+        } else {
+            Log.e(TAG, "getTopRatedMovies: ${response.errorBody()!!.charStream().readText()}")
+        }
     }
 
     private fun getTrendingMovies() = viewModelScope.launch {

@@ -21,4 +21,10 @@ interface HomeApi {
                 "&with_original_language=en"
     )
     suspend fun getTrendingTvShows(): Response<Discover>
+
+    @Headers("Authorization: Bearer ${BuildConfig.API_KEY}")
+    @GET(
+        "movie/top_rated?language=en-US"
+    )
+    suspend fun getTopRatedMovies(): Response<Discover>
 }

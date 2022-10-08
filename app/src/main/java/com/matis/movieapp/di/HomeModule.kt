@@ -29,7 +29,7 @@ class HomeModule {
     @Singleton
     fun provideAllegroSearchApi(): HomeApi {
         return Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/4/")
+            .baseUrl("https://api.themoviedb.org/3/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create()
