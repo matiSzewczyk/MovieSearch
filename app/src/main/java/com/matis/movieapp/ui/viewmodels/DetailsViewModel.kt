@@ -1,5 +1,6 @@
 package com.matis.movieapp.ui.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.matis.movieapp.data.models.details.Details
@@ -35,8 +36,13 @@ class DetailsViewModel @Inject constructor(
             } else {
                 repository.getTvShow(id)
             }
-            setTitle(response)
-            setPoster(response)
+            if (response.isSuccessful) {
+                setTitle(response)
+                setPoster(response)
+                Log.d(TAG, "setUiData: ${response.body()!!}")
+            } else {
+                Log.e(TAG, "setUiData: ${response.errorBody()!!.charStream().readText()}")
+            }
         }
     }
 
