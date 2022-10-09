@@ -51,20 +51,22 @@
         android:id="@+id/movie_genres"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="italic"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/movie_title"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
-        app:layout_constraintEnd_toEndOf="@id/guideline_right" />
+        app:layout_constraintTop_toBottomOf="@id/movie_title" />
 
     <RatingBar
         android:id="@+id/rating_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:isIndicator="true"
         android:numStars="10"
         android:progressTint="@color/gold"
         android:scaleX=".6"
         android:scaleY=".6"
+        android:secondaryProgressTint="@color/gold"
         app:layout_constraintEnd_toEndOf="@id/guideline_right"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
         app:layout_constraintTop_toBottomOf="@id/movie_genres" />

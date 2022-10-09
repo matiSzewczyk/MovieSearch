@@ -13,12 +13,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.request.RequestOptions
-import com.matis.movieapp.R
 import com.matis.movieapp.databinding.FragmentDetailsBinding
 import com.matis.movieapp.ui.viewmodels.DetailsViewModel
 import jp.wasabeef.glide.transformations.BlurTransformation
 import jp.wasabeef.glide.transformations.CropTransformation
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
