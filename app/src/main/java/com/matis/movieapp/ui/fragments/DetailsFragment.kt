@@ -11,8 +11,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.request.RequestOptions
 import com.matis.movieapp.databinding.FragmentDetailsBinding
 import com.matis.movieapp.ui.viewmodels.DetailsViewModel
+import jp.wasabeef.glide.transformations.BlurTransformation
+import jp.wasabeef.glide.transformations.CropTransformation
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -47,9 +51,18 @@ class DetailsFragment : Fragment() {
 
                         movieTitle.text = it.title
 
+                        val multi = MultiTransformation(
+                            BlurTransformation(20, 1),
+                            CropTransformation(view.width, 550)
+                        )
+
+                        Glide.with(movieBackdrop.context)
+                            .load("https://image.tmdb.org/t/p/w500" + it.backdrop)
+                            .apply(RequestOptions.bitmapTransform(multi))
+                            .into(movieBackdrop)
+
                         Glide.with(moviePoster.context)
                             .load("https://image.tmdb.org/t/p/w500" + it.poster)
-                            .fitCenter()
                             .into(moviePoster)
 
                         movieRating.text = it.rating?.take(3)

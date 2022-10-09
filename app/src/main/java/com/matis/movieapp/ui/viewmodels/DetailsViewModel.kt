@@ -23,6 +23,7 @@ class DetailsViewModel @Inject constructor(
 
     data class UiState(
         var poster: String? = null,
+        var backdrop: String? = null,
         var title: String? = null,
         var rating: String? = null,
         var description: String? = null,
@@ -43,6 +44,7 @@ class DetailsViewModel @Inject constructor(
             if (response.isSuccessful) {
                 setTitle(response)
                 setPoster(response)
+                setBackdrop(response)
                 setRating(response)
                 setDescription(response)
                 setDuration(response)
@@ -50,6 +52,15 @@ class DetailsViewModel @Inject constructor(
             } else {
                 Log.e(TAG, "setUiData: ${response.errorBody()!!.charStream().readText()}")
             }
+        }
+    }
+
+    private fun setBackdrop(response: Response<Details>) {
+        val backdrop = response.body()!!.backdrop_path
+        _uiState.update {
+            it.copy(
+                backdrop = backdrop
+            )
         }
     }
 
