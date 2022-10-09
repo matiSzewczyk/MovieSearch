@@ -7,5 +7,5 @@
 
 ## Screenshots
 
-[<img src="https://imgur.com/6MvzBug.png" width="200">](https://imgur.com/6MvzBug.png)
-[<img src="https://imgur.com/IdgiJtA.png" width="200">](https://imgur.com/IdgiJtA.png)
+[<img src="https://imgur.com/BVWySDb.png" width="200">](https://imgur.com/BVWySDb.png)
+[<img src="https://imgur.com/1fp7nRw.png" width="200">](https://imgur.com/1fp7nRw.png)
