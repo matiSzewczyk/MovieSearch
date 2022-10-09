@@ -13,10 +13,12 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.request.RequestOptions
+import com.matis.movieapp.R
 import com.matis.movieapp.databinding.FragmentDetailsBinding
 import com.matis.movieapp.ui.viewmodels.DetailsViewModel
 import jp.wasabeef.glide.transformations.BlurTransformation
 import jp.wasabeef.glide.transformations.CropTransformation
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -53,7 +55,7 @@ class DetailsFragment : Fragment() {
 
                         val multi = MultiTransformation(
                             BlurTransformation(20, 1),
-                            CropTransformation(view.width, 550)
+                            CropTransformation(view.width, 750)
                         )
 
                         Glide.with(movieBackdrop.context)
@@ -71,9 +73,17 @@ class DetailsFragment : Fragment() {
 
                         movieDescription.text = it.description
 
-                        movieDuration.text = it.duration
+                        movieYear.text = getString(
+                            R.string.released, it.year
+                        )
 
-                        clockIcon.isVisible = movieDuration.text.isNotEmpty()
+                        movieCountry.text = getString(
+                            R.string.country, it.country
+                        )
+
+                        movieDuration.text = getString(
+                            R.string.runtime, it.duration
+                        )
                     }
                 }
             }

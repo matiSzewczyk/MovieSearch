@@ -27,7 +27,9 @@ class DetailsViewModel @Inject constructor(
         var title: String? = null,
         var rating: String? = null,
         var description: String? = null,
-        var duration: String? = null
+        var duration: String? = null,
+        var country: String? = null,
+        var year: String? = null
     )
 
     private var _uiState = MutableStateFlow(UiState())
@@ -48,10 +50,37 @@ class DetailsViewModel @Inject constructor(
                 setRating(response)
                 setDescription(response)
                 setDuration(response)
+                setCountry(response)
+                setYear(response)
                 Log.d(TAG, "setUiData: ${response.body()!!}")
             } else {
                 Log.e(TAG, "setUiData: ${response.errorBody()!!.charStream().readText()}")
             }
+        }
+    }
+
+    private fun setYear(response: Response<Details>) {
+        var year = response.body()!!.first_air_date
+        if (year == null) {
+            year = response.body()!!.release_date
+        }
+        year = year?.take(4)
+        _uiState.update {
+            it.copy(
+                year = year.toString()
+            )
+        }
+    }
+
+    private fun setCountry(response: Response<Details>) {
+        var country = response.body()!!.origin_country?.get(0)
+        if (country == null) {
+            country = response.body()!!.production_companies?.get(0)?.origin_country
+        }
+        _uiState.update {
+            it.copy(
+                country = country.toString()
+            )
         }
     }
 

@@ -9,5 +9,7 @@
     <string name="top_rated_movies">Top Rated Movies</string>
     <string name="top_rated_tv_shows">Top Rated Tv Shows</string>
     <string name="rating">Rating</string>
-    <string name="runtime">Runtime</string>
+    <string name="runtime">Runtime \n %s</string>
+    <string name="released">Released \n %s</string>
+    <string name="country">Country \n %s</string>
 </resources>
