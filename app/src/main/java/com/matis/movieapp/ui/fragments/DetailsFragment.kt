@@ -57,6 +57,10 @@ class DetailsFragment : Fragment() {
                         starImage.isVisible = movieRating.text.isNotEmpty()
 
                         movieDescription.text = it.description
+
+                        movieDuration.text = it.duration
+
+                        clockIcon.isVisible = movieDuration.text.isNotEmpty()
                     }
                 }
             }
@@ -68,5 +72,4 @@ class DetailsFragment : Fragment() {
         _binding = null
         viewModel.close()
     }
-
 }

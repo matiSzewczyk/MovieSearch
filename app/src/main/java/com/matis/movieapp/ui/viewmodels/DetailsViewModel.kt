@@ -25,7 +25,8 @@ class DetailsViewModel @Inject constructor(
         var poster: String? = null,
         var title: String? = null,
         var rating: String? = null,
-        var description: String? = null
+        var description: String? = null,
+        var duration: String? = null
     )
 
     private var _uiState = MutableStateFlow(UiState())
@@ -44,10 +45,24 @@ class DetailsViewModel @Inject constructor(
                 setPoster(response)
                 setRating(response)
                 setDescription(response)
+                setDuration(response)
                 Log.d(TAG, "setUiData: ${response.body()!!}")
             } else {
                 Log.e(TAG, "setUiData: ${response.errorBody()!!.charStream().readText()}")
             }
+        }
+    }
+
+    private fun setDuration(response: Response<Details>) {
+        var duration = response.body()!!.runtime.toString()
+        if (duration == "null") {
+            duration = "~" + response.body()!!.last_episode_to_air?.runtime.toString()
+        }
+        duration += " min"
+        _uiState.update {
+            it.copy(
+                duration = duration
+            )
         }
     }
 
