@@ -25,7 +25,7 @@ class DetailsViewModel @Inject constructor(
         var poster: String? = null,
         var backdrop: String? = null,
         var title: String? = null,
-        var rating: String? = null,
+        var rating: Double = 0.0,
         var description: String? = null,
         var duration: String? = null,
         var country: String? = null,
@@ -119,7 +119,7 @@ class DetailsViewModel @Inject constructor(
         val rating = response.body()!!.vote_average
         _uiState.update {
             it.copy(
-                rating = rating.toString()
+                rating = rating!!
             )
         }
     }
@@ -152,7 +152,7 @@ class DetailsViewModel @Inject constructor(
             it.copy(
                 poster = null,
                 title = null,
-                rating = null
+                rating = 0.0
             )
         }
     }

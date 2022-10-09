@@ -67,9 +67,7 @@ class DetailsFragment : Fragment() {
                             .load("https://image.tmdb.org/t/p/w500" + it.poster)
                             .into(moviePoster)
 
-                        movieRating.text = it.rating?.take(3)
-
-                        starImage.isVisible = movieRating.text.isNotEmpty()
+                        ratingBar.rating = it.rating.toFloat()
 
                         movieDescription.text = it.description
 
