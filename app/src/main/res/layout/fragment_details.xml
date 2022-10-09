@@ -32,7 +32,7 @@
         android:id="@+id/movie_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/baloo"
+        android:textStyle="bold"
         android:textAlignment="center"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="@id/guideline_right"
