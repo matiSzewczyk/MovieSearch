@@ -43,7 +43,7 @@ class MovieAdapter(
         holder.binding.apply {
             Glide.with(moviePoster.context)
                 .load("https://image.tmdb.org/t/p/w500" + movies[position].poster_path)
-                .override(375, 375)
+                .override(450, 450)
                 .into(moviePoster)
         }
     }
