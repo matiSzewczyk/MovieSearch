@@ -32,6 +32,7 @@ class DetailsViewModel @Inject constructor(
 
     fun setUiData(name: String?, id: Int) {
         viewModelScope.launch {
+            onCleared()
             val response: Response<Details> = if (name == null) {
                 repository.getMovie(id)
             } else {
@@ -77,5 +78,20 @@ class DetailsViewModel @Inject constructor(
                 title = title,
             )
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        _uiState.update {
+            it.copy(
+                poster = null,
+                title = null,
+                rating = null
+            )
+        }
+    }
+
+    fun close() {
+        onCleared()
     }
 }
