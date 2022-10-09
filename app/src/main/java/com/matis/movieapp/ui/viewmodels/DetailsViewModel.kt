@@ -2,7 +2,7 @@ package com.matis.movieapp.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.matis.movieapp.data.models.details.movie.DetailsMovie
+import com.matis.movieapp.data.models.details.Details
 import com.matis.movieapp.data.sources.details.DetailsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,16 +30,26 @@ class DetailsViewModel @Inject constructor(
 
     fun setUiData(name: String?, id: Int) {
         viewModelScope.launch {
-            val response: Response<DetailsMovie> = if (name == null) {
+            val response: Response<Details> = if (name == null) {
                 repository.getMovie(id)
             } else {
                 repository.getTvShow(id)
             }
             setTitle(response)
+            setPoster(response)
         }
     }
 
-    private fun setTitle(response: Response<DetailsMovie>) {
+    private fun setPoster(response: Response<Details>) {
+        val poster = response.body()!!.poster_path
+        _uiState.update {
+            it.copy(
+                poster = poster
+            )
+        }
+    }
+
+    private fun setTitle(response: Response<Details>) {
         val title = if (response.body()!!.title == null) {
             response.body()!!.name
         } else {

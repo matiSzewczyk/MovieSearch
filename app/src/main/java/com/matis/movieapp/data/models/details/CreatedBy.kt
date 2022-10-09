@@ -1,4 +1,4 @@
-package com.matis.movieapp.data.models.details.movie
+package com.matis.movieapp.data.models.details
 
 data class CreatedBy(
     val credit_id: String?,

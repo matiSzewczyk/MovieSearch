@@ -1,4 +1,4 @@
-package com.matis.movieapp.data.models.Discover
+package com.matis.movieapp.data.models.discover
 
 data class Discover(
     val page: Int,

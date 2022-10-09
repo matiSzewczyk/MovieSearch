@@ -1,4 +1,4 @@
-package com.matis.movieapp.data.models.details.movie
+package com.matis.movieapp.data.models.details
 
 data class Season(
     val air_date: String?,

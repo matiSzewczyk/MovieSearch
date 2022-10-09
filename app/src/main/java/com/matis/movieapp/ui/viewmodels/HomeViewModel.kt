@@ -3,7 +3,7 @@ package com.matis.movieapp.ui.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.matis.movieapp.data.models.Discover.Result
+import com.matis.movieapp.data.models.discover.Result
 import com.matis.movieapp.data.sources.home.HomeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

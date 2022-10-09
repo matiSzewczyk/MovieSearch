@@ -1,7 +1,7 @@
 package com.matis.movieapp.data.sources.home
 
 import com.matis.movieapp.BuildConfig
-import com.matis.movieapp.data.models.Discover.Discover
+import com.matis.movieapp.data.models.discover.Discover
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers

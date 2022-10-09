@@ -1,6 +1,6 @@
-package com.matis.movieapp.data.models.details.movie
+package com.matis.movieapp.data.models.details
 
-data class DetailsMovie(
+data class Details(
     val adult: Boolean?,
     val backdrop_path: String?,
     val belongs_to_collection: BelongsToCollection?,

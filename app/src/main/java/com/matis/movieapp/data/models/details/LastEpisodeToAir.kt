@@ -1,6 +1,6 @@
-package com.matis.movieapp.data.models.details.movie
+package com.matis.movieapp.data.models.details
 
-data class NextEpisodeToAir(
+data class LastEpisodeToAir(
     val air_date: String?,
     val episode_number: Int?,
     val id: Int?,
