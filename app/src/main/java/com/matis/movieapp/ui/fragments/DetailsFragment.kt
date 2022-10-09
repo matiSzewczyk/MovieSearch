@@ -52,6 +52,8 @@ class DetailsFragment : Fragment() {
                             .into(moviePoster)
 
                         movieRating.text = it.rating?.take(3)
+
+                        movieDescription.text = it.description
                     }
                 }
             }
