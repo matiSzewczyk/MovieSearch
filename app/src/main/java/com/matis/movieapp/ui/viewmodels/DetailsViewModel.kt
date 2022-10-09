@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.matis.movieapp.data.models.details.Details
+import com.matis.movieapp.data.models.details.Genre
 import com.matis.movieapp.data.sources.details.DetailsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,7 +30,8 @@ class DetailsViewModel @Inject constructor(
         var description: String? = null,
         var duration: String? = null,
         var country: String? = null,
-        var year: String? = null
+        var year: String? = null,
+        var genres: MutableList<Genre>? = null
     )
 
     private var _uiState = MutableStateFlow(UiState())
@@ -52,10 +54,23 @@ class DetailsViewModel @Inject constructor(
                 setDuration(response)
                 setCountry(response)
                 setYear(response)
+                setGenres(response)
                 Log.d(TAG, "setUiData: ${response.body()!!}")
             } else {
                 Log.e(TAG, "setUiData: ${response.errorBody()!!.charStream().readText()}")
             }
+        }
+    }
+
+    private fun setGenres(response: Response<Details>) {
+        val genres: MutableList<Genre> = mutableListOf()
+       response.body()!!.genres?.map {
+           genres.add(it)
+       }
+         _uiState.update {
+            it.copy(
+                genres = genres
+            )
         }
     }
 

@@ -40,11 +40,22 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAlignment="center"
+        android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@id/guideline_right"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
         app:layout_constraintTop_toBottomOf="@id/movie_poster" />
+
+    <TextView
+        android:id="@+id/movie_genres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/movie_title"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right" />
 
     <RatingBar
         android:id="@+id/rating_bar"
@@ -56,7 +67,7 @@
         android:scaleY=".6"
         app:layout_constraintEnd_toEndOf="@id/guideline_right"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@id/movie_title" />
+        app:layout_constraintTop_toBottomOf="@id/movie_genres" />
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -67,7 +78,7 @@
         app:layout_constraintGuide_percent=".5" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/info_layout"
+        android:id="@+id/info_layout_titles"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -76,7 +87,7 @@
         app:layout_constraintTop_toBottomOf="@id/rating_bar">
 
         <TextView
-            android:id="@+id/movie_country"
+            android:id="@+id/movie_country_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -85,7 +96,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/movie_year"
+            android:id="@+id/movie_year_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -94,13 +105,51 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/movie_duration"
+            android:id="@+id/movie_duration_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/runtime"
             android:textAlignment="center"
             android:textSize="16sp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/info_layout_values"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/info_layout_titles">
+
+        <TextView
+            android:id="@+id/movie_country_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/movie_year_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/movie_duration_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -113,7 +162,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@id/guideline_right"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@id/info_layout" />
+        app:layout_constraintTop_toBottomOf="@id/info_layout_values" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_right"

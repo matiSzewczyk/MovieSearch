@@ -71,17 +71,18 @@ class DetailsFragment : Fragment() {
 
                         movieDescription.text = it.description
 
-                        movieYear.text = getString(
-                            R.string.released, it.year
-                        )
+                        movieCountryValue.text = it.country
+                        movieCountryTitle.isVisible = !(it.country.isNullOrEmpty())
 
-                        movieCountry.text = getString(
-                            R.string.country, it.country
-                        )
+                        movieYearValue.text = it.year
+                        movieYearTitle.isVisible = !(it.year.isNullOrEmpty())
 
-                        movieDuration.text = getString(
-                            R.string.runtime, it.duration
-                        )
+                        movieDurationValue.text = it.duration
+                        movieDurationTitle.isVisible = !(it.duration.isNullOrEmpty())
+
+                        movieGenres.text = it.genres?.joinToString {
+                            it.name.toString()
+                        }
                     }
                 }
             }
