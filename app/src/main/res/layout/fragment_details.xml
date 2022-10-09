@@ -90,7 +90,7 @@
 
         <TextView
             android:id="@+id/movie_country_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/country"
@@ -99,7 +99,7 @@
 
         <TextView
             android:id="@+id/movie_year_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/released"
@@ -108,7 +108,7 @@
 
         <TextView
             android:id="@+id/movie_duration_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/runtime"
@@ -128,7 +128,7 @@
 
         <TextView
             android:id="@+id/movie_country_value"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textAlignment="center"
@@ -137,7 +137,7 @@
 
         <TextView
             android:id="@+id/movie_year_value"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textAlignment="center"
@@ -146,7 +146,7 @@
 
         <TextView
             android:id="@+id/movie_duration_value"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textAlignment="center"
