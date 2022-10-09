@@ -1,9 +1,8 @@
 package com.matis.movieapp.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.matis.movieapp.data.models.Details.movie.DetailsMovie
+import com.matis.movieapp.data.models.details.movie.DetailsMovie
 import com.matis.movieapp.data.sources.details.DetailsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,33 +30,25 @@ class DetailsViewModel @Inject constructor(
 
     fun setUiData(name: String?, id: Int) {
         viewModelScope.launch {
-            if (name == null) {
-                val response = repository.getMovie(id)
-                if (response.isSuccessful) {
-                    Log.d(TAG, "setUiData: ${response.body()!!}")
-                    _uiState.update {
-                        it.copy(
-                            poster = response.body()!!.poster_path,
-                            title = response.body()!!.title
-                        )
-                    }
-                } else {
-                    Log.e(TAG, "setUiData: ${response.errorBody()!!.charStream().readText()}")
-                }
+            val response: Response<DetailsMovie> = if (name == null) {
+                repository.getMovie(id)
             } else {
-                val response = repository.getTvShow(id)
-                if (response.isSuccessful) {
-                    Log.d(TAG, "setUiData: ${response.body()!!}")
-                    _uiState.update {
-                        it.copy(
-                            poster = response.body()!!.poster_path,
-                            title = response.body()!!.name
-                        )
-                    }
-                } else {
-                    Log.e(TAG, "setUiData: ${response.errorBody()!!.charStream().readText()}")
-                }
+                repository.getTvShow(id)
             }
+            setTitle(response)
+        }
+    }
+
+    private fun setTitle(response: Response<DetailsMovie>) {
+        val title = if (response.body()!!.title == null) {
+            response.body()!!.name
+        } else {
+            response.body()!!.title
+        }
+        _uiState.update {
+            it.copy(
+                title = title,
+            )
         }
     }
 }
