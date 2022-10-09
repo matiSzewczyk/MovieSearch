@@ -8,4 +8,5 @@
     <string name="trending_tv_shows">Trending TV Shows</string>
     <string name="top_rated_movies">Top Rated Movies</string>
     <string name="top_rated_tv_shows">Top Rated Tv Shows</string>
+    <string name="rating">Rating</string>
 </resources>

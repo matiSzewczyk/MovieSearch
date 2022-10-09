@@ -44,10 +44,15 @@ class DetailsFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collectLatest {
                     binding.apply {
+
                         movieTitle.text = it.title
+
                         Glide.with(moviePoster.context)
                             .load("https://image.tmdb.org/t/p/w500" + it.poster)
+                            .fitCenter()
                             .into(moviePoster)
+
+                        movieRating.text = it.rating?.take(3)
                     }
                 }
             }

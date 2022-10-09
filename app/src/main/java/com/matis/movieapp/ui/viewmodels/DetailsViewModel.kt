@@ -23,7 +23,8 @@ class DetailsViewModel @Inject constructor(
 
     data class UiState(
         var poster: String? = null,
-        var title: String? = null
+        var title: String? = null,
+        var rating: String? = null
     )
 
     private var _uiState = MutableStateFlow(UiState())
@@ -39,10 +40,20 @@ class DetailsViewModel @Inject constructor(
             if (response.isSuccessful) {
                 setTitle(response)
                 setPoster(response)
+                setRating(response)
                 Log.d(TAG, "setUiData: ${response.body()!!}")
             } else {
                 Log.e(TAG, "setUiData: ${response.errorBody()!!.charStream().readText()}")
             }
+        }
+    }
+
+    private fun setRating(response: Response<Details>) {
+        val rating = response.body()!!.vote_average
+        _uiState.update {
+            it.copy(
+                rating = rating.toString()
+            )
         }
     }
 
