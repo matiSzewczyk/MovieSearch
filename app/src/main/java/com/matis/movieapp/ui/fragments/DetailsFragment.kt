@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -52,6 +53,8 @@ class DetailsFragment : Fragment() {
                             .into(moviePoster)
 
                         movieRating.text = it.rating?.take(3)
+
+                        starImage.isVisible = movieRating.text.isNotEmpty()
 
                         movieDescription.text = it.description
                     }
