@@ -24,6 +24,7 @@ class DetailsViewModel @Inject constructor(
 ) : ViewModel() {
 
     data class UiState(
+        var id: Int? = null,
         var poster: String? = null,
         var backdrop: String? = null,
         var title: String? = null,
@@ -39,7 +40,7 @@ class DetailsViewModel @Inject constructor(
     val uiState: StateFlow<UiState> get() = _uiState.asStateFlow()
 
     fun setUiData(name: String?, id: Int, savedInstanceState: Bundle?) {
-        if (savedInstanceState != null) return
+        if (!shouldReload(id, savedInstanceState)) return
         viewModelScope.launch {
             val response: Response<Details> = if (name == null) {
                 repository.getMovie(id)
@@ -47,6 +48,7 @@ class DetailsViewModel @Inject constructor(
                 repository.getTvShow(id)
             }
             if (response.isSuccessful) {
+                setId(id)
                 setTitle(response)
                 setPoster(response)
                 setBackdrop(response)
@@ -61,6 +63,18 @@ class DetailsViewModel @Inject constructor(
                 Log.e(TAG, "setUiData: ${response.errorBody()!!.charStream().readText()}")
             }
         }
+    }
+
+    private fun setId(id: Int) {
+        _uiState.update {
+            it.copy(
+                id = id
+            )
+        }
+    }
+
+    private fun shouldReload(id: Int, savedInstanceState: Bundle?): Boolean {
+        return uiState.value.id != id && savedInstanceState == null
     }
 
     private fun setGenres(response: Response<Details>) {
