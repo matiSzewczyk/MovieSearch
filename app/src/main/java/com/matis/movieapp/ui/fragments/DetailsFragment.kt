@@ -67,6 +67,7 @@ class DetailsFragment : Fragment() {
                             .into(moviePoster)
 
                         ratingBar.rating = it.rating.toFloat()
+                        ratingBar.isVisible = it.rating != 0.0
 
                         movieDescription.text = it.description
 
