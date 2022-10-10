@@ -1,5 +1,6 @@
 package com.matis.movieapp.ui.viewmodels
 
+import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -37,9 +38,9 @@ class DetailsViewModel @Inject constructor(
     private var _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> get() = _uiState.asStateFlow()
 
-    fun setUiData(name: String?, id: Int) {
+    fun setUiData(name: String?, id: Int, savedInstanceState: Bundle?) {
+        if (savedInstanceState != null) return
         viewModelScope.launch {
-            onCleared()
             val response: Response<Details> = if (name == null) {
                 repository.getMovie(id)
             } else {
@@ -64,10 +65,10 @@ class DetailsViewModel @Inject constructor(
 
     private fun setGenres(response: Response<Details>) {
         val genres: MutableList<Genre> = mutableListOf()
-       response.body()!!.genres?.map {
-           genres.add(it)
-       }
-         _uiState.update {
+        response.body()!!.genres?.map {
+            genres.add(it)
+        }
+        _uiState.update {
             it.copy(
                 genres = genres
             )
@@ -159,20 +160,5 @@ class DetailsViewModel @Inject constructor(
                 title = title,
             )
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        _uiState.update {
-            it.copy(
-                poster = null,
-                title = null,
-                rating = 0.0
-            )
-        }
-    }
-
-    fun close() {
-        onCleared()
     }
 }

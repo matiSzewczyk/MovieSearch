@@ -41,7 +41,8 @@ class DetailsFragment : Fragment() {
 
         viewModel.setUiData(
             arguments?.get("name") as String?,
-            arguments?.get("id") as Int
+            arguments?.get("id") as Int,
+            savedInstanceState
         )
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -90,6 +91,5 @@ class DetailsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        viewModel.close()
     }
 }
