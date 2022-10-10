@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="ShapeAppearanceOverlay.App.BottomCornerSize8Percent" parent="">
+    <style name="ShapeAppearanceOverlay.App.BottomCornerSize25Percent" parent="">
         <item name="cornerSizeBottomLeft">25dp</item>
         <item name="cornerSizeBottomRight">25dp</item>
         <item name="cornerFamilyBottomLeft">rounded</item>
