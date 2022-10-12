@@ -147,9 +147,9 @@ class HomeFragment : Fragment(), CustomClickInterface {
             }
             searchInput.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    hideSoftInput()
                     clearSearchInput()
                     hideSearchInput()
+                    hideSoftInput()
                     return@setOnEditorActionListener true
                 }
                 false
