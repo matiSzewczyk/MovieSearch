@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -40,6 +41,8 @@ class HomeFragment : Fragment(), CustomClickInterface {
 
     private lateinit var transition: Slide
 
+    private lateinit var arrayAdapter: ArrayAdapter<String>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         transition = Slide(Gravity.END)
@@ -63,6 +66,8 @@ class HomeFragment : Fragment(), CustomClickInterface {
         setupTvShowsRecyclerView()
         setupTopRatedMoviesRecyclerView()
         setupTopRatedTvShowsRecyclerView()
+
+        setupAutoCompleteTv()
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -155,6 +160,16 @@ class HomeFragment : Fragment(), CustomClickInterface {
                 false
             }
         }
+    }
+
+    private fun setupAutoCompleteTv() {
+        arrayAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_expandable_list_item_1,
+            arrayListOf("Hello", "world", ":)")
+        )
+
+        binding.searchInput.setAdapter(arrayAdapter)
     }
 
     private fun setupMoviesRecyclerView() = binding.trendingMoviesRecyclerView.apply {
