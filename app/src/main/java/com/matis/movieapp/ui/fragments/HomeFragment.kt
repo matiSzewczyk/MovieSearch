@@ -167,9 +167,9 @@ class HomeFragment : Fragment(), CustomClickInterface {
             requireContext(),
             android.R.layout.simple_expandable_list_item_1,
             arrayListOf("Hello", "world", ":)")
-        )
-
-        binding.searchInput.setAdapter(arrayAdapter)
+        ).also {
+            binding.searchInput.setAdapter(it)
+        }
     }
 
     private fun setupMoviesRecyclerView() = binding.trendingMoviesRecyclerView.apply {
