@@ -2,9 +2,11 @@ package com.matis.movieapp.data.sources.home
 
 import com.matis.movieapp.BuildConfig
 import com.matis.movieapp.data.models.discover.Discover
+import com.matis.movieapp.data.models.search.SearchResults
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Query
 
 interface HomeApi {
 
@@ -33,4 +35,12 @@ interface HomeApi {
         "tv/top_rated?language=en-US"
     )
     suspend fun getTopRatedTvShows(): Response<Discover>
+
+    @Headers("Authorization: Bearer ${BuildConfig.API_KEY}")
+    @GET(
+        "search/movie?language=en-US"
+    )
+    suspend fun searchForMovies(
+        @Query("query") query: String
+    ): Response<SearchResults>
 }
