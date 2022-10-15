@@ -152,4 +152,13 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun searchMovies(query: String) = viewModelScope.launch {
+        val response = repository.searchMovies(query)
+
+        if (response.isSuccessful) {
+            Log.d(TAG, "searchMovies: ${response.body()!!.results}")
+        } else {
+            Log.e(TAG, "searchMovies: ${response.errorBody()!!.charStream().readText()}")
+        }
+    }
 }

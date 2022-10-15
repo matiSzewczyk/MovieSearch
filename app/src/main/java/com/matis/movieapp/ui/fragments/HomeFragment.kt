@@ -152,6 +152,7 @@ class HomeFragment : Fragment(), CustomClickInterface {
             }
             searchInput.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    viewModel.searchMovies(searchInput.text.toString())
                     clearSearchInput()
                     hideSearchInput()
                     hideSoftInput()
