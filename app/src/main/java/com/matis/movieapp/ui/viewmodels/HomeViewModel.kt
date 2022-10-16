@@ -45,6 +45,11 @@ class HomeViewModel @Inject constructor(
         var status: UiStatus? = null,
     )
 
+    data class AutoCompleteUiState(
+        var searchResults: MutableList<String> = mutableListOf(),
+        var status: UiStatus? = null
+    )
+
     private var _tvShowsUiState = MutableStateFlow(TvShowsUiState())
     val tvShowsUiState: StateFlow<TvShowsUiState> get() = _tvShowsUiState.asStateFlow()
 
@@ -56,6 +61,9 @@ class HomeViewModel @Inject constructor(
 
     private var _topRatedTvShowsUiState = MutableStateFlow(TopRatedTvShowsUiState())
     val topRatedTvShowsUiState: StateFlow<TopRatedTvShowsUiState> get() = _topRatedTvShowsUiState.asStateFlow()
+
+    private var _autoCompleteUiState = MutableStateFlow(AutoCompleteUiState())
+    val autoCompleteUiState: StateFlow<AutoCompleteUiState> get() = _autoCompleteUiState.asStateFlow()
 
     init {
         getTrendingMovies()
@@ -156,7 +164,16 @@ class HomeViewModel @Inject constructor(
         val response = repository.searchMovies(query)
 
         if (response.isSuccessful) {
+            response.body()!!.results.map {
+                _autoCompleteUiState.value.searchResults.add(it.original_title)
+            }
+            _autoCompleteUiState.update {
+                it.copy(
+                    status = UiStatus.Success
+                )
+            }
             Log.d(TAG, "searchMovies: ${response.body()!!.results}")
+            Log.d(TAG, "searchMovies: ${autoCompleteUiState.value.searchResults}")
         } else {
             Log.e(TAG, "searchMovies: ${response.errorBody()!!.charStream().readText()}")
         }

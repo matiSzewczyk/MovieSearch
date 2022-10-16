@@ -3,6 +3,7 @@ package com.matis.movieapp.ui.fragments
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,8 @@ import com.matis.movieapp.ui.viewmodels.HomeViewModel
 import com.matis.movieapp.utils.CustomClickInterface
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+
+private const val TAG = "HomeFragment"
 
 class HomeFragment : Fragment(), CustomClickInterface {
 
@@ -137,6 +140,23 @@ class HomeFragment : Fragment(), CustomClickInterface {
             }
         }
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.autoCompleteUiState.collectLatest {
+                    when (it.status) {
+                        is HomeViewModel.UiStatus.Success -> {
+                            Log.d(TAG, "onViewCreated: ${viewModel.autoCompleteUiState.value.searchResults}")
+                            viewModel.autoCompleteUiState.value.searchResults.map { value ->
+                                arrayAdapter.add(value)
+                            }
+                            arrayAdapter.notifyDataSetChanged()
+                        }
+                        else -> Unit
+                    }
+                }
+            }
+        }
+
         binding.apply {
             searchButton.setOnClickListener {
                 showSearchInput()
@@ -153,9 +173,9 @@ class HomeFragment : Fragment(), CustomClickInterface {
             searchInput.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     viewModel.searchMovies(searchInput.text.toString())
-                    clearSearchInput()
-                    hideSearchInput()
-                    hideSoftInput()
+//                    clearSearchInput()
+//                    hideSearchInput()
+//                    hideSoftInput()
                     return@setOnEditorActionListener true
                 }
                 false
@@ -167,7 +187,7 @@ class HomeFragment : Fragment(), CustomClickInterface {
         arrayAdapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_expandable_list_item_1,
-            arrayListOf("Hello", "world", ":)")
+            viewModel.autoCompleteUiState.value.searchResults
         ).also {
             binding.searchInput.setAdapter(it)
         }
