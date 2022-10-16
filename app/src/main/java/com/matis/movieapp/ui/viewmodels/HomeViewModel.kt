@@ -173,7 +173,6 @@ class HomeViewModel @Inject constructor(
                 )
             }
             Log.d(TAG, "searchMovies: ${response.body()!!.results}")
-            Log.d(TAG, "searchMovies: ${autoCompleteUiState.value.searchResults}")
         } else {
             Log.e(TAG, "searchMovies: ${response.errorBody()!!.charStream().readText()}")
         }

@@ -70,8 +70,6 @@ class HomeFragment : Fragment(), CustomClickInterface {
         setupTopRatedMoviesRecyclerView()
         setupTopRatedTvShowsRecyclerView()
 
-        setupAutoCompleteTv()
-
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.moviesUiState.collectLatest {
@@ -145,11 +143,11 @@ class HomeFragment : Fragment(), CustomClickInterface {
                 viewModel.autoCompleteUiState.collectLatest {
                     when (it.status) {
                         is HomeViewModel.UiStatus.Success -> {
-                            Log.d(TAG, "onViewCreated: ${viewModel.autoCompleteUiState.value.searchResults}")
-                            viewModel.autoCompleteUiState.value.searchResults.map { value ->
-                                arrayAdapter.add(value)
-                            }
-                            arrayAdapter.notifyDataSetChanged()
+                            Log.d(
+                                TAG,
+                                "onViewCreated: ${viewModel.autoCompleteUiState.value.searchResults}"
+                            )
+                            setupAutoCompleteTv()
                         }
                         else -> Unit
                     }
