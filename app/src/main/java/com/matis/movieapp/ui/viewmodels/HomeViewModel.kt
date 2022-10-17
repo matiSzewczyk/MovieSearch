@@ -46,7 +46,8 @@ class HomeViewModel @Inject constructor(
     )
 
     data class AutoCompleteUiState(
-        var searchResults: MutableList<String> = mutableListOf(),
+        var searchResults: MutableList<com.matis.movieapp.data.models.search.Result> = mutableListOf(),
+        var autoCompleteList: MutableList<String> = mutableListOf(),
         var status: UiStatus? = null
     )
 
@@ -165,7 +166,8 @@ class HomeViewModel @Inject constructor(
 
         if (response.isSuccessful) {
             response.body()!!.results.map {
-                _autoCompleteUiState.value.searchResults.add(it.original_title)
+                _autoCompleteUiState.value.searchResults.add(it)
+                _autoCompleteUiState.value.autoCompleteList.add(it.original_title)
             }
             _autoCompleteUiState.update {
                 it.copy(

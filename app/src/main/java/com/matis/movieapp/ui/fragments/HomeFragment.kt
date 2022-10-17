@@ -171,12 +171,16 @@ class HomeFragment : Fragment(), CustomClickInterface {
             searchInput.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     viewModel.searchMovies(searchInput.text.toString())
-//                    clearSearchInput()
-//                    hideSearchInput()
-//                    hideSoftInput()
                     return@setOnEditorActionListener true
                 }
                 false
+            }
+            searchInput.setOnItemClickListener { _, _, position, _ ->
+                navigateToDetailsFragment(
+                    viewModel.autoCompleteUiState.value.searchResults[position].id,
+                    null,
+                )
+                clearSearchInput()
             }
         }
     }
@@ -185,7 +189,7 @@ class HomeFragment : Fragment(), CustomClickInterface {
         arrayAdapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_expandable_list_item_1,
-            viewModel.autoCompleteUiState.value.searchResults
+            viewModel.autoCompleteUiState.value.autoCompleteList
         ).also {
             binding.searchInput.setAdapter(it)
         }
@@ -266,7 +270,12 @@ class HomeFragment : Fragment(), CustomClickInterface {
     }
 
     override fun onClickListener(id: Int, name: String?) {
+        navigateToDetailsFragment(id, name)
+    }
+
+    private fun navigateToDetailsFragment(id: Int, name: String?) {
         val action = HomeFragmentDirections.actionSearchFragmentToMovieFragment(name, id)
         findNavController().navigate(action)
     }
+
 }
