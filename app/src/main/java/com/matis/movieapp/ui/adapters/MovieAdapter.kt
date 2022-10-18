@@ -43,7 +43,7 @@ class MovieAdapter(
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.binding.apply {
             Glide.with(moviePoster.context)
-                .load(Constants.POSTER_URL + movies[position].poster_path)
+                .load(Constants.IMAGE_URL + movies[position].poster_path)
                 .override(450, 450)
                 .into(moviePoster)
         }

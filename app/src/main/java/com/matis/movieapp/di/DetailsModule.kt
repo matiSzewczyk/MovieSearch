@@ -3,6 +3,7 @@ package com.matis.movieapp.di
 import com.matis.movieapp.data.sources.details.DetailsApi
 import com.matis.movieapp.data.sources.details.DetailsRepository
 import com.matis.movieapp.data.sources.details.DetailsRepositoryImpl
+import com.matis.movieapp.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,7 +29,7 @@ class DetailsModule {
     @Singleton
     fun provideMovieDbApi(): DetailsApi {
         return Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/3/")
+            .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create()

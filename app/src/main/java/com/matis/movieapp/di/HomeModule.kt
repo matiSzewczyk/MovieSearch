@@ -4,6 +4,7 @@ import com.matis.movieapp.data.sources.home.HomeApi
 
 import com.matis.movieapp.data.sources.home.HomeRepository
 import com.matis.movieapp.data.sources.home.HomeRepositoryImpl
+import com.matis.movieapp.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +22,7 @@ class HomeModule {
     @Singleton
     fun provideHomeRepository(
         homeApi: HomeApi
-    ) : HomeRepository {
+    ): HomeRepository {
         return HomeRepositoryImpl(homeApi)
     }
 
@@ -29,7 +30,7 @@ class HomeModule {
     @Singleton
     fun provideMovieDbApi(): HomeApi {
         return Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/3/")
+            .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create()

@@ -15,6 +15,7 @@ import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.request.RequestOptions
 import com.matis.movieapp.databinding.FragmentDetailsBinding
 import com.matis.movieapp.ui.viewmodels.DetailsViewModel
+import com.matis.movieapp.utils.Constants
 import jp.wasabeef.glide.transformations.BlurTransformation
 import jp.wasabeef.glide.transformations.CropTransformation
 import kotlinx.coroutines.flow.collectLatest
@@ -58,12 +59,12 @@ class DetailsFragment : Fragment() {
                         )
 
                         Glide.with(movieBackdrop.context)
-                            .load("https://image.tmdb.org/t/p/w500" + it.backdrop)
+                            .load(Constants.IMAGE_URL + it.backdrop)
                             .apply(RequestOptions.bitmapTransform(multi))
                             .into(movieBackdrop)
 
                         Glide.with(moviePoster.context)
-                            .load("https://image.tmdb.org/t/p/w500" + it.poster)
+                            .load(Constants.IMAGE_URL + it.poster)
                             .into(moviePoster)
 
                         ratingBar.rating = it.rating.toFloat()
