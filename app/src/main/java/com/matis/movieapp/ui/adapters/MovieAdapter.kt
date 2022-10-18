@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.matis.movieapp.data.models.discover.Result
 import com.matis.movieapp.databinding.MovieRvItemBinding
+import com.matis.movieapp.utils.Constants
 import com.matis.movieapp.utils.CustomClickInterface
 
 class MovieAdapter(
@@ -42,7 +43,7 @@ class MovieAdapter(
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.binding.apply {
             Glide.with(moviePoster.context)
-                .load("https://image.tmdb.org/t/p/w500${movies[position].poster_path}")
+                .load(Constants.POSTER_URL + movies[position].poster_path)
                 .override(450, 450)
                 .into(moviePoster)
         }
