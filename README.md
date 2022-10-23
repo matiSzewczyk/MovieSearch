@@ -1,4 +1,4 @@
-# Movie App
+# MovieSearch
 
 ### Work in progress
 
