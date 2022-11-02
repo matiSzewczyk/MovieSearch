@@ -46,6 +46,10 @@ class DetailsFragment : Fragment() {
             savedInstanceState
         )
 
+        collectUiValues()
+    }
+
+    private fun collectUiValues() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collectLatest {
