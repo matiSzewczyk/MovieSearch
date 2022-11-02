@@ -59,7 +59,7 @@ class DetailsFragment : Fragment() {
 
                         val multi = MultiTransformation(
                             BlurTransformation(20, 1),
-                            CropTransformation(view.width, 750)
+                            CropTransformation(requireView().width, 750)
                         )
 
                         Glide.with(movieBackdrop.context)
