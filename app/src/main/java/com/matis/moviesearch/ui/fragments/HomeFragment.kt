@@ -70,6 +70,39 @@ class HomeFragment : Fragment(), CustomClickInterface {
         setupTopRatedMoviesRecyclerView()
         setupTopRatedTvShowsRecyclerView()
 
+        collectUiData()
+
+        binding.apply {
+            searchButton.setOnClickListener {
+                showSearchInput()
+            }
+
+            searchInput.setOnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus) {
+                    hideSearchInput()
+                    hideSoftInput()
+                } else {
+                    showSoftInput()
+                }
+            }
+            searchInput.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    viewModel.searchMovies(searchInput.text.toString())
+                    return@setOnEditorActionListener true
+                }
+                false
+            }
+            searchInput.setOnItemClickListener { _, _, position, _ ->
+                navigateToDetailsFragment(
+                    viewModel.autoCompleteUiState.value.searchResults[position].id,
+                    null,
+                )
+                clearSearchInput()
+            }
+        }
+    }
+
+    private fun collectUiData() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.moviesUiState.collectLatest {
@@ -152,35 +185,6 @@ class HomeFragment : Fragment(), CustomClickInterface {
                         else -> Unit
                     }
                 }
-            }
-        }
-
-        binding.apply {
-            searchButton.setOnClickListener {
-                showSearchInput()
-            }
-
-            searchInput.setOnFocusChangeListener { _, hasFocus ->
-                if (!hasFocus) {
-                    hideSearchInput()
-                    hideSoftInput()
-                } else {
-                    showSoftInput()
-                }
-            }
-            searchInput.setOnEditorActionListener { _, actionId, _ ->
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    viewModel.searchMovies(searchInput.text.toString())
-                    return@setOnEditorActionListener true
-                }
-                false
-            }
-            searchInput.setOnItemClickListener { _, _, position, _ ->
-                navigateToDetailsFragment(
-                    viewModel.autoCompleteUiState.value.searchResults[position].id,
-                    null,
-                )
-                clearSearchInput()
             }
         }
     }
